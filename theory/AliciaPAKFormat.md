@@ -6,8 +6,8 @@ This pak format uses little endian byte sequence with fixed size variables(field
 
 
 
-##### Header
-
+#### Header
+##### format
  `int` (*4 bytes*) - **Name**: "Format type"  **Note**: Always {0x50 0x41 0x4B 0x53} (ANSI "PAKS")
 
  `int` (*4 bytes*) - **Name**: "Unknown"
@@ -23,8 +23,10 @@ This pak format uses little endian byte sequence with fixed size variables(field
  `int` (*4 bytes*) - **Name**: "Unknown type"  **Note**: Always {0x4E 0x50 0x48 0x53} (ANSI "NPHS")
 
  
-
- ##### Entry
+ #### Entry
+ Entries start at: `0x7D000`. Max entry size is: *620bytes*.
+ 
+ ##### format
 
 `int` &nbsp; (*4 bytes*) - **Name**: "Group indicator" **Note**: Seems to indicate position of entry on stack. Seems to start on 0x28?
 
@@ -73,8 +75,10 @@ This pak format uses little endian byte sequence with fixed size variables(field
 `wstr` &nbsp; (max 516 bytes) - **Name**: "Path to file"
 
 
+#### Resource
+Resources start at: `0xF00000`
 
-
+##### format
 
 # Raw:
 
