@@ -2,4 +2,4 @@
 Modding of AliciaOnline
 
 
-[Alicia PAK Format](theory/AliciaPAKFormat)
+[Alicia PAK Format](theory/AliciaPAKFormat.md)
