@@ -1,8 +1,6 @@
 # Alicia PAK format
 
-Alicia online version: `v1.318`
-
-
+Alicia online version: `v1.318`. Reminder that this is just a guess-work. 
 
 This pak format uses little endian byte sequence with fixed size variables(fields).
 
