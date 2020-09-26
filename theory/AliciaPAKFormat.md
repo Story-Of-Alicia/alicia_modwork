@@ -80,6 +80,7 @@ Resources start at: `0xF00000`
 
 ##### format
 `void` (*x bytes*) - **Name**: "Variable data prefix"    **Note**: Seems to contain some specific information for resources. (this field is optional)
+
 `void` (*x bytes*) - **Name**: "Variable resource data"  **Note**: Actual data of resource
 # Raw:
 
