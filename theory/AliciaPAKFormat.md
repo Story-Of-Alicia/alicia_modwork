@@ -38,7 +38,7 @@ This pak format uses little endian byte sequence with fixed size variables(field
 
 `long` (*8 bytes*) - **Name**: "Resource data file byte length"  **Note**: If resource is encoded in pak, this is byte length
 
-`int` &nbsp; (*4 bytes*) - **Name**: "Unknown"                         **Note**: always resource data file byte length but type int
+`int` &nbsp; (*4 bytes*) - **Name**: "Unknown"                         **Note**: Seems to be always "resource data file byte length", but type is int
 
 `int` &nbsp; (*4 bytes*) - ??
 
@@ -106,7 +106,7 @@ PAK ENTRY FORMAT (104+516 bytes):
  int  (4 bytes) - Name: "Resource data byte length"       Note: Has non-zero value only when resource is encoded in PAK
  long (8 bytes) - Name: "Resource data file byte length"  Note: If resource is encoded in pak, this is byte length
  long (8 bytes) - Name: "Resource data file byte length"  Note: If resource is encoded in pak, this is byte length
- int  (4 bytes) - Name: "Unknown"                         Note: always resource data file byte length but type int
+ int  (4 bytes) - Name: "Unknown"                         Note: Seems to be always "resource data file byte length", but type is int
  int  (4 bytes) - ??
  int  (4 bytes) - ??
  int  (4 bytes) - ??
