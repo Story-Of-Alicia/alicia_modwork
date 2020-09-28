@@ -72,6 +72,8 @@ This pak format uses little endian byte sequence with fixed size variables(field
 
 `long` (*8 bytes*) - **Name**: "Unknown"
 
+`int` &nbsp; (*4 bytes*) - ??
+
 `wstr` &nbsp; (max 516 bytes) - **Name**: "Path to file"
 
 
@@ -121,6 +123,8 @@ PAK ENTRY FORMAT (104+516 bytes):
  int  (4 bytes) - Name: "CRC identifier"                 Note: Always {0x43 0x52 0x43 0x32} (ANSI "CRC2")
  int  (4 bytes) - Name: "CRC algorithm result?"
  long (8 bytes) - Name: "Unknown"
+ int  (4 bytes) - ??
+  
  wstr (max 516 bytes) - Name: "Path to file"
 
 
