@@ -9,26 +9,38 @@
 #include <stdint.h>
 #include <malloc.h>
 
-uint32_t ToUnsignedInt(const uint8_t bytes[4]) {
-    return ((uint32_t) bytes[3]) << 24u | ((uint32_t) bytes[2]) << 16u | ((uint32_t) bytes[1]) << 8u | bytes[0];
-}
+/**
+ * Converts little-endian array of bytes to big-endian number
+ * @param bytes Byte array
+ * @return Big-endian Unsigned Int(Long)
+ */
+uint32_t ToUnsignedInt(const uint8_t bytes[4]);
 
-uint64_t ToUnsignedLong(const uint8_t bytes[8]) {
-    return
-            ((uint64_t) bytes[7]) << 54u | ((uint64_t) bytes[6]) << 48u | ((uint64_t) bytes[5]) << 40u |
-            ((uint64_t) bytes[4]) << 32u |
-            ((uint64_t) bytes[3]) << 24u | ((uint64_t) bytes[2]) << 16u | ((uint64_t) bytes[1]) << 8u |
-            ((uint64_t) bytes[0]);
-}
+/**
+ * Converts little-endian array of bytes to big-endian number
+ * @param bytes Byte array
+ * @return Big-endian Unsigned Long Long
+ */
+uint64_t ToUnsignedLong(const uint8_t bytes[8]);
 
-uint16_t ToUnsignedWideChar(const uint8_t bytes[2]) {
-    return ((uint16_t) bytes[1]) << 8u | ((uint16_t) bytes[0]);
-}
+/**
+ * Converts little-endian array of bytes to big-endian number
+ * @param bytes Byte array
+ * @return Big-endian Unsigned Wide Char
+ */
+uint16_t ToUnsignedWideChar(const uint8_t bytes[2]);
 
-uint8_t ToUnsignedChar(const uint16_t wideChar) {
-    return wideChar >> 8u;
-}
+/**
+ * Converts big-endian unsigned wide char to signed big-endian char
+ * @param bytes Byte array
+ * @return Big-endian Signed Char
+ */
+uint8_t ToUnsignedChar(const uint16_t wideChar);
 
+
+/**
+ * Readable Buffer
+ */
 struct RBuffer {
 private:
     uint32_t index = 0;
@@ -82,7 +94,10 @@ public:
 
 };
 
-struct PakRes {
+/**
+ * PAK Resource
+ */
+struct Resource {
 public:
     uint32_t stackIndicator;
 
@@ -119,7 +134,7 @@ public:
 
 public:
     void Destroy() {
-        // free(this->data);
+        free(this->data);
     }
 
     bool IsEncoded() const {
@@ -147,9 +162,9 @@ FILE *GetFileHandle(char *path, const char *access) {
     return file;
 }
 
-PakRes ReadResource(uint8_t *bytes) {
+Resource ReadResource(uint8_t *bytes) {
     RBuffer rbuf(620, bytes);
-    return PakRes{
+    return Resource{
             .stackIndicator = rbuf.ReadNextUInt(),
             .resourceOffset = rbuf.ReadNextUInt(),
             .resourceLength = rbuf.ReadNextUInt(),
@@ -188,7 +203,7 @@ int main() {
     scanf("%s", path);
 
     auto file = GetFileHandle(path, "rb");
-    auto log   = GetFileHandle("report.txt", "w");
+    auto log = GetFileHandle("report.txt", "w");
     printf("File open; READ BINARY\n");
 
     const int RES_OFFSET = 0xF00000;
@@ -206,21 +221,39 @@ int main() {
         buffer[bufferIndex++] = byte;
 
         if (bufferIndex == 620) {
-            // stack indicator cant be null
-            if(buffer[0] != 0) {
-                  PakRes resource = ReadResource(buffer);
-                  fprintf(log, "Offset: %-10X Length: %-10X ", resource.resourceOffset, resource.GetLength());
-                  fprintf(log, "Path: %ls\n", resource.path);
-                  entryCount++;
+            if (buffer[0] != 0) {
+                Resource resource = ReadResource(buffer);
+                fprintf(log, "Offset: 0x%-10X Length: 0x%-10X ", resource.resourceOffset, resource.GetLength());
+                fprintf(log, "Path: %ls\n", resource.path);
+                entryCount++;
             }
             bufferIndex = 0;
         }
 
     }
-    
+
     fclose(file);
     fclose(log);
-
-
+    
     return 0;
+}
+
+uint32_t ToUnsignedInt(const uint8_t bytes[4]) {
+    return
+            ((uint32_t) bytes[3]) << 24u | ((uint32_t) bytes[2]) << 16u | ((uint32_t) bytes[1]) << 8u | bytes[0];
+}
+uint64_t ToUnsignedLong(const uint8_t bytes[8]) {
+    return
+            ((uint64_t) bytes[7]) << 54u | ((uint64_t) bytes[6]) << 48u | ((uint64_t) bytes[5]) << 40u |
+            ((uint64_t) bytes[4]) << 32u |
+            ((uint64_t) bytes[3]) << 24u | ((uint64_t) bytes[2]) << 16u | ((uint64_t) bytes[1]) << 8u |
+            ((uint64_t) bytes[0]);
+}
+uint16_t ToUnsignedWideChar(const uint8_t bytes[2]) {
+    return
+            ((uint16_t) bytes[1]) << 8u | ((uint16_t) bytes[0]);
+}
+
+uint8_t ToUnsignedChar(const uint16_t wideChar) {
+    return wideChar >> 8u;
 }
