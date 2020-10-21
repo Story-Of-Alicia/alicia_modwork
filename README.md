@@ -1,8 +1,7 @@
 # alicia_modwork
-Exploring internals of AlicicaOnline.
+Exploring internals of AliciaOnline.
 
 ## ModWork
-### Resources
 [Alicia PAK Format](theory/AliciaPAKFormat.md)
 
 ## TODO
