@@ -24,11 +24,11 @@ This pak format uses little endian byte sequence with fixed size variables(field
 
  
  #### Entry
- Entries start at: `0x7D000`. Max entry size is: *620bytes*.
+ Entries start at sector: `0x7D000`. Max entry size is: *620bytes*.
  
  ##### format
 
-`int` &nbsp; (*4 bytes*) - **Name**: "Group indicator" **Note**: Seems to indicate position of entry on stack. Seems to start on 0x28?
+`int` &nbsp; (*4 bytes*) - **Name**: "Entry magic" 
 
 `int`  &nbsp; (*4 bytes*) - **Name**: "Relative Resource Offset" **Note**: Is relative position in PAK. If this value is 0, it indicates that file is not encoded in PAK.
 
@@ -78,7 +78,7 @@ This pak format uses little endian byte sequence with fixed size variables(field
 
 
 #### Resource
-Resources start at: `0xF00000`
+Resources start at sector: `0xF00000`
 
 ##### format
 `void` (*x bytes*) - **Name**: "Variable data prefix"    **Note**: Seems to contain some specific information for resources. (this field is optional)
