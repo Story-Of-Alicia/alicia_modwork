@@ -101,7 +101,7 @@ PAK HEADER FORMAT:
 
 
 PAK ENTRY FORMAT (104+516 bytes): 
- int  (4 bytes) - Name: "Group indicator"                 Note: Seems to indicate position of entry on stack. Seems to start on 0x28?
+ int  (4 bytes) - Name: "Entry magic"                     Note: Seems to indicate position of entry on stack. Seems to start on 0x28?
  int  (4 bytes) - Name: "Relative Resource Offset"        Note: Is relative position in PAK. If this value is 0, it indicates that file is not encoded in PAK.
  int  (4 bytes) - Name: "Resource data byte length"       Note: Has non-zero value only when resource is encoded in PAK
  long (8 bytes) - Name: "Resource data file byte length"  Note: If resource is encoded in pak, this is byte length
