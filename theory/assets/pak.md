@@ -1,42 +1,36 @@
 
 # Alicia PAK format
 
-Alicia online version: `v1.318`. Reminder that this is just a guess-work. 
+AliciaOnline version: `v1.318`. 
 
-This pak format uses little endian byte sequence with fixed size variables(fields).
+This PAK uses little endian byte sequence. 
+
+#### PAK Header
+Header of PAK file with size of 44 bytes.
+| Field type | Field name              | Notes   |
+| ---------- | ----------------------- | ------- |
+| `int`      | Header magic  | Always `{0x50 0x41 0x4B 0x53}` (ANSI "PAKS") |
+| `int`      | Unknown       | |
+| `int`      | Unknown       | |
+| `int`      | Unknown       | |
+| `int`      | Length        | File length in bytes |
+| `int`      | Unknown       | |
+| `int`      | Unknown magic | Always `{0x4E 0x50 0x48 0x53}` (ANSI "NPHS") |
+| `int`      | Unknown       | Seems to always be 0x0 |
 
 
-
-#### Header
-##### format
- `int` (*4 bytes*) - **Name**: "Header magic"  **Note**: Always {0x50 0x41 0x4B 0x53} (ANSI "PAKS")
-
- `int` (*4 bytes*) - **Name**: "Unknown"
-
- `int` (*4 bytes*) - **Name**: "Unknown"
-
- `int` (*4 bytes*) - **Name**: "Unknown"
-
- `int` (*4 bytes*) - **Name**: "File byte length"
-
- `int` (*4 bytes*) - **Name**: "Unknown"
-
- `int` (*4 bytes*) - **Name**: "Unknown magic"  **Note**: Always {0x4E 0x50 0x48 0x53} (ANSI "NPHS")
-
+#### PAK Assets
+##### Entries
+Entries start at sector: `0x7D000` prefixed with ansi magic `FILSFILZ` followed by unknown 4 bytes that are skipped. Each entry has size of 620 bytes. First 108 bytes are allocated for entry info, and other 512 bytes are allocated for path.
  
- #### Assets
- ##### Entries
- Entries start at sector: `0x7D000` prefixed with magic "`FILSFILZ`". Each entry has size of 620 bytes. First 108 bytes are allocated for entry info, and other 512 bytes are allocated for path.
- 
- ###### Entry format
- >
-> `int` &nbsp; (*4 bytes*) - **Name**: "Entry magic" 
-> 
-> `int`  &nbsp; (*4 bytes*) - **Name**: "Relative Resource Offset" **Note**: Is relative position in PAK. If this > value is 0, it indicates that file is not encoded in PAK.
-> 
-> `int` &nbsp; (*4 bytes*) - **Name**: "Resource data byte length"       **Note**: Has non-zero value only when resource is encoded in PAK
-> 
-> `long` (*8 bytes*) - **Name**: "Resource data file byte length"  **Note**: If resource is encoded in pak, this is byte length
+###### Entry format
+| Field type | Field name              | Notes      |
+| ---------- | ----------------------- | -------    |
+| `int`      | Entry prefix            | Always 0x0 | 
+| `int`      | Entry magic             | |
+| `int`      | Data offset             | Offset of data from begining of PAK. If this value is zero, it means that file is not located in PAK but file-system |
+| `int`      | Data length             | Data length in bytes. Only present if previous field value is  non-zero |
+| `long`     | Resource data file byte length"  **Note**: If resource is encoded in pak, this is byte length
 > 
 > `long` (*8 bytes*) - **Name**: "Resource data file byte length"  **Note**: If resource is encoded in pak, this is byte length
 > 
@@ -83,6 +77,8 @@ This pak format uses little endian byte sequence with fixed size variables(field
 Data start at sector: `0xF00000`.
 
 ###### Data format
-> `void` (*x bytes*) - **Name**: "Variable data prefix"    **Note**: Seems to contain some specific information for resources. (this field is optional)
-> 
-> `void` (*x bytes*) - **Name**: "Variable resource data"  **Note**: Actual data of resource
+
+| Field type | Field name              | Notes   |
+| ---------- | ----------------------- | ------- |
+| `void`     | Variable data prefix    | Seems to contain some specific information for data. |
+| `void`     | Variable resource data  | Actual data | 
