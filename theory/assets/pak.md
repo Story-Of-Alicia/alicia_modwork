@@ -8,7 +8,7 @@ This pak format uses little endian byte sequence with fixed size variables(field
 
 #### Header
 ##### format
- `int` (*4 bytes*) - **Name**: "Format type"  **Note**: Always {0x50 0x41 0x4B 0x53} (ANSI "PAKS")
+ `int` (*4 bytes*) - **Name**: "Header magic"  **Note**: Always {0x50 0x41 0x4B 0x53} (ANSI "PAKS")
 
  `int` (*4 bytes*) - **Name**: "Unknown"
 
@@ -20,7 +20,7 @@ This pak format uses little endian byte sequence with fixed size variables(field
 
  `int` (*4 bytes*) - **Name**: "Unknown"
 
- `int` (*4 bytes*) - **Name**: "Unknown type"  **Note**: Always {0x4E 0x50 0x48 0x53} (ANSI "NPHS")
+ `int` (*4 bytes*) - **Name**: "Unknown magic"  **Note**: Always {0x4E 0x50 0x48 0x53} (ANSI "NPHS")
 
  
  #### Entry
@@ -91,13 +91,13 @@ Alicia online version: v1.318
 This pak format uses little endian byte sequence with fixed size variables(fields).
 
 PAK HEADER FORMAT:
- int    (4 bytes) - Name: "Format type"  Note: Always {0x50 0x41 0x4B 0x53} (ANSI "PAKS")
+ int    (4 bytes) - Name: "Header magic"  Note: Always {0x50 0x41 0x4B 0x53} (ANSI "PAKS")
  int    (4 bytes) - Name: "Unknown"
  int    (4 bytes) - Name: "Unknown"
  int    (4 bytes) - Name: "Unknown"
  int    (4 bytes) - Name: "File byte length"
  int    (4 bytes) - Name: "Unknown"
- int    (4 bytes) - Name: "Unknown type" Note: Always {0x4E 0x50 0x48 0x53} (ANSI "NPHS")
+ int    (4 bytes) - Name: "Unknown magic" Note: Always {0x4E 0x50 0x48 0x53} (ANSI "NPHS")
 
 
 PAK ENTRY FORMAT (104+516 bytes): 
