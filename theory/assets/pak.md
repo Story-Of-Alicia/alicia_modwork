@@ -24,7 +24,7 @@ This pak format uses little endian byte sequence with fixed size variables(field
 
  
  #### Entry
- Entries start at sector: `0x7D000`. Max entry size is: *620bytes*.
+ Entries start at sector: `0x7D000` prefixed with magic "`FILSFILZ`". Each entry has size of 620 bytes. First 108 bytes are allocated for entry info, and other 512 bytes are allocated for path.
  
  ##### format
 
