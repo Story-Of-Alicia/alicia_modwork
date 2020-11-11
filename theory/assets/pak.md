@@ -1,7 +1,9 @@
 
 # Alicia PAK format
 
-AliciaOnline version: `v1.318`. 
+> AliciaOnline version: `v1.318`. 
+
+Reverse engineered with [ProcMon](https://docs.microsoft.com/en-us/sysinternals/downloads/procmon), [HxD](https://mh-nexus.de/en/hxd/), [and my bare hands](https://github.com/rgnter/alicia_modwork/tree/master/source).
 
 This PAK uses little endian byte sequence. 
 
