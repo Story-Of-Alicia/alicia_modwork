@@ -26,52 +26,31 @@ Entries start at sector: `0x7D000` prefixed with ansi magic `FILSFILZ` followed 
 ###### Entry format
 | Field type | Field name              | Notes      |
 | ---------- | ----------------------- | -------    |
-| `int`      | Entry prefix            | Always 0x0 | 
-| `int`      | Entry magic             | |
-| `int`      | Data offset             | Offset of data from begining of PAK. If this value is zero, it means that file is not located in PAK but file-system |
-| `int`      | Data length             | Data length in bytes. Only present if previous field value is  non-zero |
-| `long`     | Resource data file byte length"  **Note**: If resource is encoded in pak, this is byte length
-> 
-> `long` (*8 bytes*) - **Name**: "Resource data file byte length"  **Note**: If resource is encoded in pak, this is byte length
-> 
-> `int` &nbsp; (*4 bytes*) - **Name**: "Unknown"                         **Note**: Seems to be always "resource data file byte length", but type is int
-> 
-> `int` &nbsp; (*4 bytes*) - ??
-> 
-> `int` &nbsp; (*4 bytes*) - ??
-> 
-> `int` &nbsp; (*4 bytes*) - ??
-> 
-> `int` &nbsp; (*4 bytes*) - ??
-> 
-> `int` &nbsp; (*4 bytes*) - ??
-> 
-> `int` &nbsp; (*4 bytes*) - ??
-> 
-> `int` &nbsp; (*4 bytes*) - ??
-> 
-> `int` &nbsp; (*4 bytes*) - ??
-> 
-> `long` (*8 bytes*) - **Name**: "Unknown type"                   **Note**: Always {0x46 0x49 0x53 0x00 0x00 0x00 0x00 0x00} (ANSI "FIS")
-> 
-> `int` &nbsp; (*4 bytes*) - **Name**: "Unknown type value"    
-> 
-> `int` &nbsp; (*4 bytes*) - ??
-> 
-> `int` &nbsp; (*4 bytes*) - ??
-> 
-> `int` &nbsp; (*4 bytes*) - ??
-> 
-> `int` &nbsp; (*4 bytes*) - **Name**: "CRC identifier"                 **Note**: Always {0x43 0x52 0x43 0x32} (ANSI "CRC2")
-> 
-> `int` &nbsp; (*4 bytes*) - **Name**: "CRC algorithm result?"
-> 
-> `long` (*8 bytes*) - **Name**: "Unknown"
-> 
-> `int` &nbsp; (*4 bytes*) - ??
-> 
-> `wstr` &nbsp; (max 516 bytes) - **Name**: "Path to file"
-
+| `int`      | Asset prefix            | Always 0x0 | 
+| `int`      | Asset magic             | |
+| `int`      | Data offset             | Offset of data from begining of PAK file. Only present if file is packed |
+| `int`      | Data length             | Data length in bytes. Only present if file is packed |
+| `int`      | Uncompressed length0    | Uncompressed length of data |
+| `int`      | Is compressed           | Int that is used as boolean to indicate if data are compressed |
+| `int`      | Uncompressed length1    | -- |
+| `int`      | Unknown0                | Always 0x0 |
+| `int`      | Uncompressed length2    | -- |
+| `int`      | Unknown1                | |
+| `int`      | Unknown2                | |
+| `int`      | Unknown3                | |
+| `int`      | Unknown4                | |
+| `int`      | Unknown5                | |
+| `int`      | Unknown6                | |
+| `int`      | Unknown7                | |
+| `int`      | Is packed               | Int that is used as boolean to indicate if file is embeded in pak |
+| `long`     | Unknown type            | Always ANSI "FIS\0"|
+| `long`     | Unknown value           | |
+| `int`      | Unknown8                | |
+| `int`      | Unknown9                | |
+| `int`      | CRC ID                  | Always ANSI "CRC2"|
+| `int`      | CRC Value               | |
+| `long`     | Unknown10               | |
+| `wstr`     | Path (512bytes)         | |
 
 ##### Data
 Data start at sector: `0xF00000`.
