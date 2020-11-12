@@ -114,23 +114,32 @@ void PakFile::LoadFromDisk() {
         if (asset.unknownType == 0)
             break;
 
-        if(asset.isCompressed) {
+        if(asset.isCompressed && asset.path.find(L".dff") != std::wstring::npos) {
             uint64_t temp = ftell(this->fileHandle);
             printf("#%llu - %ls\n", count+1, asset.path.c_str());
-            fseek(this->fileHandle, asset.dataLength, SEEK_SET);
+            fseek(this->fileHandle, asset.dataOffset, SEEK_SET);
 
             uLongf uncompressed = asset.uncompressedLength0;
             uLongf compressed   = asset.dataLength;
 
-            auto *dest = static_cast<uint8_t *>(calloc(uncompressed, sizeof(uint8_t)));
-            auto *src = static_cast<uint8_t *>(calloc(compressed, sizeof(uint8_t)));
+            auto *dest = (uint8_t*) calloc(uncompressed, sizeof(uint8_t));
+            auto *src = (uint8_t*) calloc(compressed, sizeof(uint8_t));
 
 
-            uncompress(dest, &uncompressed, src, compressed);
+            printf("%d\n", fread(src, sizeof(uint8_t), compressed, this->fileHandle));
 
-            FILE* aa = fopen("aaaa.wee", "w+");
-            fwrite(dest, sizeof(uint8_t), uncompressed, aa);
-            fclose(aa);
+            int result = uncompress(dest, &uncompressed, src, compressed);
+            if(result == Z_OK) {
+                FILE* aa = fopen("alicia.dff", "w+");
+                fwrite(dest, sizeof(uint8_t), uncompressed, aa);
+                fclose(aa);
+                printf("file\n");
+            }
+
+            if(result == Z_DATA_ERROR) {
+                printf("Corrupted!\n");
+            }
+
 
             break;
         }
