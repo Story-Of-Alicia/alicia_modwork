@@ -3,6 +3,7 @@
 //
 
 #include "pak.hpp"
+#include <zlib.h>
 
 PakFile::PakFile(const char *path) {
     fopen_s(&this->fileHandle, path, "rb");
@@ -113,7 +114,27 @@ void PakFile::LoadFromDisk() {
         if (asset.unknownType == 0)
             break;
 
-        PrintHTMLAsset(count + 1, asset, assetLoc);
+        if(asset.isCompressed) {
+            uint64_t temp = ftell(this->fileHandle);
+            printf("#%llu - %ls\n", count+1, asset.path.c_str());
+            fseek(this->fileHandle, asset.dataLength, SEEK_SET);
+
+            uLongf uncompressed = asset.uncompressedLength0;
+            uLongf compressed   = asset.dataLength;
+
+            auto *dest = static_cast<uint8_t *>(calloc(uncompressed, sizeof(uint8_t)));
+            auto *src = static_cast<uint8_t *>(calloc(compressed, sizeof(uint8_t)));
+
+
+            uncompress(dest, &uncompressed, src, compressed);
+
+            FILE* aa = fopen("aaaa.wee", "w+");
+            fwrite(dest, sizeof(uint8_t), uncompressed, aa);
+            fclose(aa);
+
+            break;
+        }
+        //PrintHTMLAsset(count + 1, asset, assetLoc);
 
         count++;
     }

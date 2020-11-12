@@ -6,6 +6,8 @@
 #include <cstdio>
 #include "file/pak.hpp"
 
+#include <zlib.h>
+
 int main() {
     printf("Specify path to res.pak >");
     char path[512] = {0};
