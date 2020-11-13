@@ -56,11 +56,11 @@ Assets start at sector: `0x7D000` prefixed with ansi magic `FILSFILZ` followed b
 | `wstr`     | Path (512bytes)         | |
 
 ##### Data
-Data start at sector: `0xF00000`.
+Data start at sector: `0xF00000`. 
 
 ###### Data format
 
 | Field type | Field name              | Notes   |
 | ---------- | ----------------------- | ------- |
-| `void`     | Variable data prefix    | Seems to contain some specific information for data. |
-| `void`     | Variable resource data  | Actual data | 
+| `void`     | Asset-specific data     | Seems to contain some specific information for asset |
+| `void`     | Variable asset data     | Actual data | 

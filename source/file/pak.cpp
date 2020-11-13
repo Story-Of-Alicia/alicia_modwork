@@ -1,9 +1,12 @@
 //
 // Created by maros on 10/24/2020.
 //
+#include <zlib.h>
+#include <fstream>
+#include <string>
 
 #include "pak.hpp"
-#include <zlib.h>
+
 
 PakFile::PakFile(const char *path) {
     fopen_s(&this->fileHandle, path, "rb");
@@ -114,7 +117,7 @@ void PakFile::LoadFromDisk() {
         if (asset.unknownType == 0)
             break;
 
-        if(asset.isCompressed && asset.path.find(L".dff") != std::wstring::npos) {
+        /*if(asset.isCompressed && asset.path.find(L".dff") != std::wstring::npos) {
             uint64_t temp = ftell(this->fileHandle);
             printf("#%llu - %ls\n", count+1, asset.path.c_str());
             fseek(this->fileHandle, asset.dataOffset, SEEK_SET);
@@ -125,8 +128,7 @@ void PakFile::LoadFromDisk() {
             auto *dest = (uint8_t*) calloc(uncompressed, sizeof(uint8_t));
             auto *src = (uint8_t*) calloc(compressed, sizeof(uint8_t));
 
-
-            printf("%d\n", fread(src, sizeof(uint8_t), compressed, this->fileHandle));
+            fread(src, sizeof(uint8_t), compressed, this->fileHandle);
 
             int result = uncompress(dest, &uncompressed, src, compressed);
             if(result == Z_OK) {
@@ -139,9 +141,18 @@ void PakFile::LoadFromDisk() {
             if(result == Z_DATA_ERROR) {
                 printf("Corrupted!\n");
             }
+            */
 
+        if(asset.path.ends_with(L".png"))  {
+            uint64_t temp = ftell(this->fileHandle);
+
+            std::wstring fileName;
+            std::getline(asset.path, fileName, "/");
+
+            std::ofstream realFile("gag/tex.txt");
 
             break;
+            fseek(this->fileHandle, temp, SEEK_SET);
         }
         //PrintHTMLAsset(count + 1, asset, assetLoc);
 
