@@ -9,6 +9,7 @@ This PAK uses little endian byte sequence.
 
 #### PAK Header
 Header of PAK file with size of 44 bytes.
+###### Header format
 | Field type | Field name              | Notes   |
 | ---------- | ----------------------- | ------- |
 | `int`      | Header magic  | Always `{0x50 0x41 0x4B 0x53}` (ANSI "PAKS") |
@@ -23,14 +24,14 @@ Header of PAK file with size of 44 bytes.
 
 #### PAK Assets
 ##### Entries
-Entries start at sector: `0x7D000` prefixed with ansi magic `FILSFILZ` followed by unknown 4 bytes that are skipped. Each entry has size of 620 bytes. First 108 bytes are allocated for entry info, and other 512 bytes are allocated for path.
+Assets start at sector: `0x7D000` prefixed with ansi magic `FILSFILZ` followed by unknown 4 bytes that are skipped. Each entry has size of 620 bytes. First 108 bytes are allocated for entry info, and other 512 bytes are allocated for path.
  
 ###### Entry format
 | Field type | Field name              | Notes      |
 | ---------- | ----------------------- | -------    |
 | `int`      | Asset prefix            | Always 0x0 | 
 | `int`      | Asset magic             | |
-| `int`      | Data offset             | Offset of data from begining of PAK file. Only present if file is packed |
+| `int`      | Data offset             | Offset of data from beginning of PAK file. Only present if file is packed |
 | `int`      | Data length             | Data length in bytes. Only present if file is packed |
 | `int`      | Uncompressed length0    | Uncompressed length of data |
 | `int`      | Is compressed           | Int that is used as boolean to indicate if data are compressed |
@@ -43,7 +44,7 @@ Entries start at sector: `0x7D000` prefixed with ansi magic `FILSFILZ` followed 
 | `int`      | Unknown4                | |
 | `int`      | Unknown5                | |
 | `int`      | Unknown6                | |
-| `int`      | Unknown7                | |
+| `int`      | Entry offset            | Offset of this entry from beginning of PAK file|
 | `int`      | Is packed               | Int that is used as boolean to indicate if file is embeded in pak |
 | `long`     | Unknown type            | Always ANSI "FIS\0"|
 | `long`     | Unknown value           | |

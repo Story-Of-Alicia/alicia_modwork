@@ -6,7 +6,7 @@
 
 #include <cstdio>
 #include "file/pak.hpp"
-
+#include <boost/as>
 
 int main() {
     printf("Specify path to res.pak >");

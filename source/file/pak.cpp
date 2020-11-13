@@ -51,7 +51,7 @@ void PrintHTMLAsset(uint64_t index, const PakAsset &asset, uint64_t loc) {
     printf("<tr>\n<td>\nUnknown4</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n",asset.unknown4);
     printf("<tr>\n<td>\nUnknown5</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n",asset.unknown5);
     printf("<tr>\n<td>\nUnknown6</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n",asset.unknown6);
-    printf("<tr>\n<td>\nUnknown7</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n",asset.unknown7);
+    printf("<tr>\n<td>\nUnknown7</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n",asset.entryOffset);
     printf("<tr>\n<td>\nIs packed</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n",asset.isPacked);
     printf("<tr>\n<td>\nUnknownType</td>\n<td>\n<code>long</code></td>\n<td>\n%llu</td>\n<td>\n</tr>\n",asset.unknownType);
     printf("<tr>\n<td>\nUnknownValue</td>\n<td>\n<code>long</code></td>\n<td>\n%llu</td>\n<td>\n</tr>\n",asset.unknownValue);
@@ -96,7 +96,7 @@ void PakFile::LoadFromDisk() {
                 .unknown4 = buf.ReadUnsignedInt(),
                 .unknown5 = buf.ReadUnsignedInt(),
                 .unknown6 = buf.ReadUnsignedInt(),
-                .unknown7 = buf.ReadUnsignedInt(),
+                .entryOffset = buf.ReadUnsignedInt(),
                 .isPacked = buf.ReadUnsignedInt(),
 
                 .unknownType = buf.ReadUnsignedLong(),

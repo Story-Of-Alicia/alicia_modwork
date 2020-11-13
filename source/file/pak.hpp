@@ -36,7 +36,7 @@ struct PakAsset {
     uint32_t unknown4{};
     uint32_t unknown5{};
     uint32_t unknown6{};
-    uint32_t unknown7{};
+    uint32_t entryOffset{};
     uint32_t isPacked{};
 
     uint64_t unknownType{};
