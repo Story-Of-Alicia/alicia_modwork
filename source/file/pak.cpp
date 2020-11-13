@@ -2,11 +2,12 @@
 // Created by maros on 10/24/2020.
 //
 #include <zlib.h>
+#include <boost/filesystem.hpp>
 #include <fstream>
-#include <string>
 
 #include "pak.hpp"
 
+namespace file = boost::filesystem;
 
 PakFile::PakFile(const char *path) {
     fopen_s(&this->fileHandle, path, "rb");
@@ -146,10 +147,18 @@ void PakFile::LoadFromDisk() {
         if(asset.path.ends_with(L".png"))  {
             uint64_t temp = ftell(this->fileHandle);
 
-            std::wstring fileName;
-            std::getline(asset.path, fileName, "/");
+            uint8_t src[asset.dataLength];
+            fread(src, sizeof(uint8_t), asset.dataLength, this->fileHandle);
 
-            std::ofstream realFile("gag/tex.txt");
+            std::ofstream file(asset.path.c_str());
+            if(file::exists(asset.path.c_str())){
+                printf("exists\n");
+            }
+
+            file << src;
+            if(file.bad())
+                printf("open\n");
+
 
             break;
             fseek(this->fileHandle, temp, SEEK_SET);
