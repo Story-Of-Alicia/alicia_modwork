@@ -1,13 +1,7 @@
 //
 // Created by maros on 10/24/2020.
 //
-#include <zlib.h>
-#include <boost/filesystem.hpp>
-#include <fstream>
-
 #include "pak.hpp"
-
-namespace file = boost::filesystem;
 
 PakFile::PakFile(const char *path) {
     fopen_s(&this->fileHandle, path, "rb");
@@ -26,7 +20,8 @@ PakFile::~PakFile() {
 void PrintHTMLAsset(uint64_t index, const PakAsset &asset, uint64_t loc) {
     printf("\n");
     printf("<div class=\"asset\">\n");
-    printf("<p><span class=\"index\">#%llu</span> %ls <span class=\"loc\">[0x%llX]</span></p>\n", index, asset.path.c_str(), loc);
+    printf("<p><span class=\"index\">#%llu</span> %ls <span class=\"loc\">[0x%llX]</span></p>\n", index,
+           asset.path.c_str(), loc);
     printf("<table class=\"table table-striped table-dark\">\n");
     printf("<tr><th>\n");
     printf("Field Name\n");
@@ -38,32 +33,38 @@ void PrintHTMLAsset(uint64_t index, const PakAsset &asset, uint64_t loc) {
     printf("Field Value\n");
     printf("</th></tr>\n");
 
-    printf("<tr>\n<td>\nPrefix</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n",asset.prefix);
-    printf("<tr>\n<td>\nMagic</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n",asset.magic);
-    printf("<tr>\n<td>\nData Offset</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n",asset.dataOffset);
-    printf("<tr>\n<td>\nData Length</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n",asset.dataLength);
+    printf("<tr>\n<td>\nPrefix</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n", asset.prefix);
+    printf("<tr>\n<td>\nMagic</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n", asset.magic);
+    printf("<tr>\n<td>\nData Offset</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n", asset.dataOffset);
+    printf("<tr>\n<td>\nData Length</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n", asset.dataLength);
 
-    printf("<tr>\n<td>\nUncompressed Length0</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n",asset.uncompressedLength0);
-    printf("<tr>\n<td>\nIs compressed</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n",asset.isCompressed);
-    printf("<tr>\n<td>\nUncompressed Length1</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n",asset.uncompressedLength1);
-    printf("<tr>\n<td>\nUnknown0</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n",asset.unknown0);
-    printf("<tr>\n<td>\nUncompressed Length2</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n",asset.uncompressedLength2);
+    printf("<tr>\n<td>\nUncompressed Length0</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n",
+           asset.uncompressedLength0);
+    printf("<tr>\n<td>\nIs compressed</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n",
+           asset.isCompressed);
+    printf("<tr>\n<td>\nUncompressed Length1</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n",
+           asset.uncompressedLength1);
+    printf("<tr>\n<td>\nUnknown0</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n", asset.unknown0);
+    printf("<tr>\n<td>\nUncompressed Length2</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n",
+           asset.uncompressedLength2);
 
-    printf("<tr>\n<td>\nUnknown1</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n",asset.unknown1);
-    printf("<tr>\n<td>\nUnknown2</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n",asset.unknown2);
-    printf("<tr>\n<td>\nUnknown3</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n",asset.unknown3);
-    printf("<tr>\n<td>\nUnknown4</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n",asset.unknown4);
-    printf("<tr>\n<td>\nUnknown5</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n",asset.unknown5);
-    printf("<tr>\n<td>\nUnknown6</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n",asset.unknown6);
-    printf("<tr>\n<td>\nUnknown7</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n",asset.entryOffset);
-    printf("<tr>\n<td>\nIs packed</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n",asset.isPacked);
-    printf("<tr>\n<td>\nUnknownType</td>\n<td>\n<code>long</code></td>\n<td>\n%llu</td>\n<td>\n</tr>\n",asset.unknownType);
-    printf("<tr>\n<td>\nUnknownValue</td>\n<td>\n<code>long</code></td>\n<td>\n%llu</td>\n<td>\n</tr>\n",asset.unknownValue);
-    printf("<tr>\n<td>\nUnknown9</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n",asset.unknown8);
-    printf("<tr>\n<td>\nUnknown10</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n",asset.unknown9);
-    printf("<tr>\n<td>\nCrcId</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n",asset.crcId);
-    printf("<tr>\n<td>\nCrcValue</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n",asset.crcValue);
-    printf("<tr>\n<td>\nUnknown11</td>\n<td>\n<code>long</code></td>\n<td>\n%llu</td>\n<td>\n</tr>\n",asset.unknown10);
+    printf("<tr>\n<td>\nUnknown1</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n", asset.unknown1);
+    printf("<tr>\n<td>\nUnknown2</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n", asset.unknown2);
+    printf("<tr>\n<td>\nUnknown3</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n", asset.unknown3);
+    printf("<tr>\n<td>\nUnknown4</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n", asset.unknown4);
+    printf("<tr>\n<td>\nUnknown5</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n", asset.unknown5);
+    printf("<tr>\n<td>\nUnknown6</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n", asset.unknown6);
+    printf("<tr>\n<td>\nUnknown7</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n", asset.entryOffset);
+    printf("<tr>\n<td>\nIs packed</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n", asset.isPacked);
+    printf("<tr>\n<td>\nUnknownType</td>\n<td>\n<code>long</code></td>\n<td>\n%llu</td>\n<td>\n</tr>\n",
+           asset.unknownType);
+    printf("<tr>\n<td>\nUnknownValue</td>\n<td>\n<code>long</code></td>\n<td>\n%llu</td>\n<td>\n</tr>\n",
+           asset.unknownValue);
+    printf("<tr>\n<td>\nUnknown9</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n", asset.unknown8);
+    printf("<tr>\n<td>\nUnknown10</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n", asset.unknown9);
+    printf("<tr>\n<td>\nCrcId</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n", asset.crcId);
+    printf("<tr>\n<td>\nCrcValue</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n", asset.crcValue);
+    printf("<tr>\n<td>\nUnknown11</td>\n<td>\n<code>long</code></td>\n<td>\n%llu</td>\n<td>\n</tr>\n", asset.unknown10);
     printf("</table></div>\n");
 
     printf("\n");
@@ -123,11 +124,7 @@ void PakFile::LoadFromDisk() {
             printf("#%llu - %ls\n", count+1, asset.path.c_str());
             fseek(this->fileHandle, asset.dataOffset, SEEK_SET);
 
-            uLongf uncompressed = asset.uncompressedLength0;
-            uLongf compressed   = asset.dataLength;
 
-            auto *dest = (uint8_t*) calloc(uncompressed, sizeof(uint8_t));
-            auto *src = (uint8_t*) calloc(compressed, sizeof(uint8_t));
 
             fread(src, sizeof(uint8_t), compressed, this->fileHandle);
 
@@ -144,23 +141,41 @@ void PakFile::LoadFromDisk() {
             }
             */
 
-        if(asset.path.ends_with(L".png"))  {
+        if (asset.isPacked) {
             uint64_t temp = ftell(this->fileHandle);
+            fseek(this->fileHandle, asset.dataOffset, SEEK_SET);
 
-            uint8_t src[asset.dataLength];
+            uLongf length = asset.dataLength;
+            auto* src = new uint8_t [length];
             fread(src, sizeof(uint8_t), asset.dataLength, this->fileHandle);
 
-            std::ofstream file(asset.path.c_str());
-            if(file::exists(asset.path.c_str())){
-                printf("exists\n");
+            char *cPath = asset.GetStandardPath();
+            // dirname modifies original string
+            char *dirs = dirname(asset.GetStandardPath());
+
+            // printf("Dir: %s | Path: %s\n", dirs, cPath);
+            std::filesystem::create_directories(dirs);
+            std::ofstream file(cPath, std::ios::binary);
+
+            // write uncompressed
+            if(asset.isCompressed) {
+                uLongf uncompressed = asset.uncompressedLength0;
+                auto* dest = new uint8_t[uncompressed];
+                uncompress(dest, &uncompressed, src, length);
+                 printf("\tWriting decompressed...\n");
+
+                delete[] dest;
+                file.write((char *) dest, uncompressed * sizeof(uint8_t));
+            } else {
+                // write normal
+                printf("\tWriting normal...\n");
+                file.write((char *) src, asset.dataLength * sizeof(uint8_t));
             }
 
-            file << src;
-            if(file.bad())
-                printf("open\n");
+            //printf("\tDone!\n");
 
-
-            break;
+            delete[] src;
+            delete (cPath);
             fseek(this->fileHandle, temp, SEEK_SET);
         }
         //PrintHTMLAsset(count + 1, asset, assetLoc);

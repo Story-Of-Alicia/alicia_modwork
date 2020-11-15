@@ -11,6 +11,10 @@
 #include <csignal>
 #include <unordered_map>
 #include <string>
+#include <zlib.h>
+#include <libgen.h>
+#include <fstream>
+#include <filesystem>
 
 #include "buffer/buffer.hpp"
 
@@ -49,8 +53,31 @@ struct PakAsset {
     uint32_t crcValue{};
     uint64_t unknown10{};
 
+
     std::wstring path;
     uint8_t *data{};
+
+public:
+    /***
+     *
+     * @return Standard cstr path to file
+     */
+     char* GetStandardPath() {
+        uint32_t length = path.length();
+        if(length == 0)
+            return nullptr;
+
+        const wchar_t* cwPath = path.c_str();
+        char *cPath = new char [length+1];
+
+        for(uint32_t i = 0; i < length; i++) {
+            // paths don't contain any widechars, we can just cast it and loose the most bits place
+            cPath[i] = (char) cwPath[i];
+        }
+        cPath[length] = '\0';
+
+        return cPath;
+    }
 };
 
 /**
