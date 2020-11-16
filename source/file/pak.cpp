@@ -1,5 +1,5 @@
 //
-// Created by maros on 10/24/2020.
+// Created by rgnt on 10/24/2020.
 //
 #include "pak.hpp"
 
@@ -17,6 +17,9 @@ PakFile::~PakFile() {
     Destroy();
 }
 
+/**
+* Used for generating report.html which can be displayed in web browser.
+**/
 void PrintHTMLAsset(uint64_t index, const PakAsset &asset, uint64_t loc) {
     printf("\n");
     printf("<div class=\"asset\">\n");
