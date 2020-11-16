@@ -5,6 +5,8 @@
 
 Reverse engineered with [ProcMon](https://docs.microsoft.com/en-us/sysinternals/downloads/procmon), [HxD](https://mh-nexus.de/en/hxd/), [and my bare hands](https://github.com/rgnter/alicia_modwork/tree/master/source).
 
+[@HSReina](https://github.com/hsreina) already made tool for unpacking(avialable on their's website), but it isn't open-source. 
+
 This PAK uses little endian byte sequence. 
 
 #### PAK Header
@@ -64,3 +66,6 @@ Data start at sector: `0xF00000`.
 | ---------- | ----------------------- | ------- |
 | `void`     | Asset-specific data     | Seems to contain some specific information for asset |
 | `void`     | Variable asset data     | Actual data | 
+
+### Data compression
+Data compression is done with [zlib](https://zlib.net/).
