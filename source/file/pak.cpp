@@ -17,10 +17,14 @@ PakFile::~PakFile() {
     Destroy();
 }
 
+void MagicPrint(const char *format, int arg) {
+    printf(format, arg, arg);
+}
+
 /**
 * Used for generating report.html which can be displayed in web browser.
 **/
-void PrintHTMLAsset(uint64_t index, const PakAsset &asset, uint64_t loc) {
+void PrintAssetHTML(uint64_t index, const PakAsset &asset, uint64_t loc) {
     printf("\n");
     printf("<div class=\"asset\">\n");
     printf("<p><span class=\"index\">#%llu</span> %ls <span class=\"loc\">[0x%llX]</span></p>\n", index,
@@ -36,42 +40,104 @@ void PrintHTMLAsset(uint64_t index, const PakAsset &asset, uint64_t loc) {
     printf("Field Value\n");
     printf("</th></tr>\n");
 
-    printf("<tr>\n<td>\nPrefix</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n", asset.prefix);
-    printf("<tr>\n<td>\nMagic</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n", asset.magic);
-    printf("<tr>\n<td>\nData Offset</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n", asset.dataOffset);
-    printf("<tr>\n<td>\nData Length</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n", asset.dataLength);
+    MagicPrint(
+            "<tr>\n<td>\nPrefix</td>\n<td>\n<code>int</code></td>\n<td>\n%u<span class=\"hex\">(0x%X)</span></td>\n<td>\n</tr>\n",
+            asset.prefix);
+    MagicPrint(
+            "<tr>\n<td>\nMagic</td>\n<td>\n<code>int</code></td>\n<td>\n%u<span class=\"hex\">(0x%X)</span></td>\n<td>\n</tr>\n",
+            asset.magic);
+    MagicPrint(
+            "<tr>\n<td>\nData Offset</td>\n<td>\n<code>int</code></td>\n<td>\n%u<span class=\"hex\">(0x%X)</span></td>\n<td>\n</tr>\n",
+            asset.dataOffset);
+    MagicPrint(
+            "<tr>\n<td>\nData Length</td>\n<td>\n<code>int</code></td>\n<td>\n%u<span class=\"hex\">(0x%X)</span></td>\n<td>\n</tr>\n",
+            asset.dataLength);
 
-    printf("<tr>\n<td>\nUncompressed Length0</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n",
-           asset.uncompressedLength0);
-    printf("<tr>\n<td>\nIs compressed</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n",
-           asset.isCompressed);
-    printf("<tr>\n<td>\nUncompressed Length1</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n",
-           asset.uncompressedLength1);
-    printf("<tr>\n<td>\nUnknown0</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n", asset.unknown0);
-    printf("<tr>\n<td>\nUncompressed Length2</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n",
-           asset.uncompressedLength2);
+    MagicPrint(
+            "<tr>\n<td>\nUncompressed Length0</td>\n<td>\n<code>int</code></td>\n<td>\n%u<span class=\"hex\">(0x%X)</span></td>\n<td>\n</tr>\n",
+            asset.uncompressedLength0);
+    MagicPrint(
+            "<tr>\n<td>\nIs compressed</td>\n<td>\n<code>int</code></td>\n<td>\n%u<span class=\"hex\">(0x%X)</span></td>\n<td>\n</tr>\n",
+            asset.isCompressed);
+    MagicPrint(
+            "<tr>\n<td>\nUncompressed Length1</td>\n<td>\n<code>int</code></td>\n<td>\n%u<span class=\"hex\">(0x%X)</span></td>\n<td>\n</tr>\n",
+            asset.uncompressedLength1);
+    MagicPrint(
+            "<tr>\n<td>\nUnknown0</td>\n<td>\n<code>int</code></td>\n<td>\n%u<span class=\"hex\">(0x%X)</span></td>\n<td>\n</tr>\n",
+            asset.unknown0);
+    MagicPrint(
+            "<tr>\n<td>\nUncompressed Length2</td>\n<td>\n<code>int</code></td>\n<td>\n%u<span class=\"hex\">(0x%X)</span></td>\n<td>\n</tr>\n",
+            asset.uncompressedLength2);
 
-    printf("<tr>\n<td>\nUnknown1</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n", asset.unknown1);
-    printf("<tr>\n<td>\nUnknown2</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n", asset.unknown2);
-    printf("<tr>\n<td>\nUnknown3</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n", asset.unknown3);
-    printf("<tr>\n<td>\nUnknown4</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n", asset.unknown4);
-    printf("<tr>\n<td>\nUnknown5</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n", asset.unknown5);
-    printf("<tr>\n<td>\nUnknown6</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n", asset.unknown6);
-    printf("<tr>\n<td>\nUnknown7</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n", asset.entryOffset);
-    printf("<tr>\n<td>\nIs packed</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n", asset.isPacked);
-    printf("<tr>\n<td>\nUnknownType</td>\n<td>\n<code>long</code></td>\n<td>\n%llu</td>\n<td>\n</tr>\n",
-           asset.unknownType);
-    printf("<tr>\n<td>\nUnknownValue</td>\n<td>\n<code>long</code></td>\n<td>\n%llu</td>\n<td>\n</tr>\n",
-           asset.unknownValue);
-    printf("<tr>\n<td>\nUnknown9</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n", asset.unknown8);
-    printf("<tr>\n<td>\nUnknown10</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n", asset.unknown9);
-    printf("<tr>\n<td>\nCrcId</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n", asset.crcId);
-    printf("<tr>\n<td>\nCrcValue</td>\n<td>\n<code>int</code></td>\n<td>\n%u</td>\n<td>\n</tr>\n", asset.crcValue);
-    printf("<tr>\n<td>\nUnknown11</td>\n<td>\n<code>long</code></td>\n<td>\n%llu</td>\n<td>\n</tr>\n", asset.unknown10);
+    MagicPrint(
+            "<tr>\n<td>\nUnknown1</td>\n<td>\n<code>int</code></td>\n<td>\n%u<span class=\"hex\">(0x%X)</span></td>\n<td>\n</tr>\n",
+            asset.unknown1);
+    MagicPrint(
+            "<tr>\n<td>\nUnknown2</td>\n<td>\n<code>int</code></td>\n<td>\n%u<span class=\"hex\">(0x%X)</span></td>\n<td>\n</tr>\n",
+            asset.unknown2);
+    MagicPrint(
+            "<tr>\n<td>\nUnknown3</td>\n<td>\n<code>int</code></td>\n<td>\n%u<span class=\"hex\">(0x%X)</span></td>\n<td>\n</tr>\n",
+            asset.unknown3);
+    MagicPrint(
+            "<tr>\n<td>\nUnknown4</td>\n<td>\n<code>int</code></td>\n<td>\n%u<span class=\"hex\">(0x%X)</span></td>\n<td>\n</tr>\n",
+            asset.unknown4);
+    MagicPrint(
+            "<tr>\n<td>\nUnknown5</td>\n<td>\n<code>int</code></td>\n<td>\n%u<span class=\"hex\">(0x%X)</span></td>\n<td>\n</tr>\n",
+            asset.unknown5);
+    MagicPrint(
+            "<tr>\n<td>\nUnknown6</td>\n<td>\n<code>int</code></td>\n<td>\n%u<span class=\"hex\">(0x%X)</span></td>\n<td>\n</tr>\n",
+            asset.isDeleted);
+    MagicPrint(
+            "<tr>\n<td>\nEntry offset</td>\n<td>\n<code>int</code></td>\n<td>\n%u<span class=\"hex\">(0x%X)</span></td>\n<td>\n</tr>\n",
+            asset.entryOffset);
+    MagicPrint(
+            "<tr>\n<td>\nIs packed</td>\n<td>\n<code>int</code></td>\n<td>\n%u<span class=\"hex\">(0x%X)</span></td>\n<td>\n</tr>\n",
+            asset.isPacked);
+    MagicPrint(
+            "<tr>\n<td>\nUnknownType</td>\n<td>\n<code>long</code></td>\n<td>\n%llu<span class=\"hex\">(0x%X)</span></td>\n<td>\n</tr>\n",
+            asset.unknownType);
+    MagicPrint(
+            "<tr>\n<td>\nUnknownValue</td>\n<td>\n<code>long</code></td>\n<td>\n%llu<span class=\"hex\">(0x%X)</span></td>\n<td>\n</tr>\n",
+            asset.unknownValue);
+    MagicPrint(
+            "<tr>\n<td>\nCRC Result</td>\n<td>\n<code>int</code></td>\n<td>\n%u<span class=\"hex\">(0x%X)</span></td>\n<td>\n</tr>\n",
+            asset.crcResult);
+    MagicPrint(
+            "<tr>\n<td>\nUnknown9</td>\n<td>\n<code>int</code></td>\n<td>\n%u<span class=\"hex\">(0x%X)</span></td>\n<td>\n</tr>\n",
+            asset.unknown9);
+    MagicPrint(
+            "<tr>\n<td>\nCrcId</td>\n<td>\n<code>int</code></td>\n<td>\n%u<span class=\"hex\">(0x%X)</span></td>\n<td>\n</tr>\n",
+            asset.crcId);
+
+    MagicPrint(
+            "<tr>\n<td>\nUnknown7</td>\n<td>\n<code>int</code></td>\n<td>\n%u<span class=\"hex\">(0x%X)</span></td>\n<td>\n</tr>\n",
+            asset.unknown7);
+    MagicPrint(
+            "<tr>\n<td>\nUnknown8</td>\n<td>\n<code>long</code></td>\n<td>\n%llu<span class=\"hex\">(0x%X)</span></td>\n<td>\n</tr>\n",
+            asset.unknown8);
+
     printf("</table></div>\n");
 
     printf("\n");
+}
 
+
+uint64_t WriteToFile(std::ofstream &file, uint8_t* data, uint64_t length, uint64_t decompressedLength, bool decompress) {
+    if (decompress) {
+        // write uncompressed
+        uLongf uncompressed = decompressedLength;
+        auto *dest = new uint8_t[uncompressed];
+
+        uncompress(dest, &uncompressed, (Bytef*) data, length);
+        if(uncompressed)
+            file.write((char *) dest, uncompressed * sizeof(uint8_t));
+        delete[] dest;
+        return uncompressed;
+    } else {
+        // write normal
+        file.write((char *) data, length * sizeof(uint8_t));
+        return length;
+    }
 }
 
 void PakFile::LoadFromDisk() {
@@ -103,22 +169,23 @@ void PakFile::LoadFromDisk() {
                 .unknown3 = buf.ReadUnsignedInt(),
                 .unknown4 = buf.ReadUnsignedInt(),
                 .unknown5 = buf.ReadUnsignedInt(),
-                .unknown6 = buf.ReadUnsignedInt(),
+                .isDeleted = buf.ReadUnsignedInt(),
                 .entryOffset = buf.ReadUnsignedInt(),
                 .isPacked = buf.ReadUnsignedInt(),
 
                 .unknownType = buf.ReadUnsignedLong(),
                 .unknownValue = buf.ReadUnsignedLong(),
 
-                .unknown8 = buf.ReadUnsignedInt(),
+                .crcResult = buf.ReadUnsignedInt(),
                 .unknown9 = buf.ReadUnsignedInt(),
 
                 .crcId = buf.ReadUnsignedInt(),
-                .crcValue = buf.ReadUnsignedInt(),
-                .unknown10 = buf.ReadUnsignedLong(),
+                .unknown7 = buf.ReadUnsignedInt(),
+                .unknown8 = buf.ReadUnsignedLong(),
 
                 .path = buf.ReadWideString(258)
         };
+
         if (asset.unknownType == 0)
             break;
 
@@ -127,42 +194,44 @@ void PakFile::LoadFromDisk() {
             fseek(this->fileHandle, asset.dataOffset, SEEK_SET);
 
             uLongf length = asset.dataLength;
-            auto* src = new uint8_t [length];
+            auto *src = new uint8_t[length];
             fread(src, sizeof(uint8_t), asset.dataLength, this->fileHandle);
 
-            char *cPath = asset.GetStandardPath();
-            // dirname modifies original string
-            char *dirs = dirname(asset.GetStandardPath());
+            char *cPath;
+            if(asset.HasPath())
+                cPath = asset.GetStandardPath();
+            else
+                cPath = new char[512];
 
-            // printf("Dir: %s | Path: %s\n", dirs, cPath);
-            std::filesystem::create_directories(dirs);
-            std::ofstream file(cPath, std::ios::binary);
-
-            // write uncompressed
-            if(asset.isCompressed) {
-                uLongf uncompressed = asset.uncompressedLength0;
-                auto* dest = new uint8_t[uncompressed];
-                uncompress(dest, &uncompressed, src, length);
-                 //printf("\tWriting decompressed...\n");
-
-                file.write((char *) dest, uncompressed * sizeof(uint8_t));
-                delete[] dest;
+            if (!asset.isDeleted) {
+                // dirname modifies original string
+                char *dirs = dirname(asset.GetStandardPath());
+                // printf("Dir: %s | Path: %s\n", dirs, cPath);
+                std::filesystem::create_directories(dirs);
             } else {
-                // write normal
-                //printf("\tWriting normal...\n");
-                file.write((char *) src, asset.dataLength * sizeof(uint8_t));
+                std::filesystem::create_directory("deleted/");
+                sprintf(cPath, "deleted/deleted#%d.bin", count+1);
             }
 
+            std::ofstream file(cPath, std::ios::binary);
+            if(!asset.isDeleted)
+                WriteToFile(file, src, length, asset.uncompressedLength0, asset.isCompressed);
+            else {
+                // if uncompressed size is bad, write normal
+                if(!WriteToFile(file, src, length, asset.uncompressedLength0, true))
+                    WriteToFile(file, src, length, length, false);
+            }
+
+            //PrintAssetHTML(count + 1, asset, assetLoc);
             //printf("\tDone!\n");
 
             delete[] src;
             delete (cPath);
             fseek(this->fileHandle, temp, SEEK_SET);
         }
-        //PrintHTMLAsset(count + 1, asset, assetLoc);
-
         count++;
     }
+
     printf("%llu\n", count);
 }
 

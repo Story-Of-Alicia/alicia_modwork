@@ -45,16 +45,16 @@ Assets start at sector: `0x7D000` prefixed with ansi magic `FILSFILZ` followed b
 | `int`      | Unknown3                | |
 | `int`      | Unknown4                | |
 | `int`      | Unknown5                | |
-| `int`      | Unknown6                | |
+| `int`      | Is Deleted              | Marks asset as deleted, has info only about offset and length|
 | `int`      | Entry offset            | Offset of this entry from beginning of PAK file|
 | `int`      | Is packed               | Int that is used as boolean to indicate if file is embeded in pak |
 | `long`     | Unknown type            | Always ANSI "FIS\0"|
 | `long`     | Unknown value           | |
-| `int`      | Unknown8                | |
+| `int`      | CRC Result              | CRC checksum of Data |
 | `int`      | Unknown9                | |
-| `int`      | CRC ID                  | Always ANSI "CRC2"|
-| `int`      | CRC Value               | |
-| `long`     | Unknown10               | |
+| `int`      | CRC Identification      | Always ANSI "CRC2"|
+| `int`      | Unknown 7               | |
+| `long`     | Unknown 8               | |
 | `wstr`     | Path (512bytes)         | |
 
 ##### Data

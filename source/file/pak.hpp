@@ -39,19 +39,19 @@ struct PakAsset {
     uint32_t unknown3{};
     uint32_t unknown4{};
     uint32_t unknown5{};
-    uint32_t unknown6{};
+    uint32_t isDeleted{};
     uint32_t entryOffset{};
     uint32_t isPacked{};
 
     uint64_t unknownType{};
     uint64_t unknownValue{};
 
-    uint32_t unknown8{};
+    uint32_t crcResult{};
     uint32_t unknown9{};
 
     uint32_t crcId{};
-    uint32_t crcValue{};
-    uint64_t unknown10{};
+    uint32_t unknown7{};
+    uint64_t unknown8{};
 
 
     std::wstring path;
@@ -78,6 +78,10 @@ public:
 
         return cPath;
     }
+
+    bool HasPath() {
+        return path[0] != 0x0;
+     }
 };
 
 /**
