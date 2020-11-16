@@ -119,28 +119,6 @@ void PakFile::LoadFromDisk() {
         if (asset.unknownType == 0)
             break;
 
-        /*if(asset.isCompressed && asset.path.find(L".dff") != std::wstring::npos) {
-            uint64_t temp = ftell(this->fileHandle);
-            printf("#%llu - %ls\n", count+1, asset.path.c_str());
-            fseek(this->fileHandle, asset.dataOffset, SEEK_SET);
-
-
-
-            fread(src, sizeof(uint8_t), compressed, this->fileHandle);
-
-            int result = uncompress(dest, &uncompressed, src, compressed);
-            if(result == Z_OK) {
-                FILE* aa = fopen("alicia.dff", "w+");
-                fwrite(dest, sizeof(uint8_t), uncompressed, aa);
-                fclose(aa);
-                printf("file\n");
-            }
-
-            if(result == Z_DATA_ERROR) {
-                printf("Corrupted!\n");
-            }
-            */
-
         if (asset.isPacked) {
             uint64_t temp = ftell(this->fileHandle);
             fseek(this->fileHandle, asset.dataOffset, SEEK_SET);
@@ -162,13 +140,13 @@ void PakFile::LoadFromDisk() {
                 uLongf uncompressed = asset.uncompressedLength0;
                 auto* dest = new uint8_t[uncompressed];
                 uncompress(dest, &uncompressed, src, length);
-                 printf("\tWriting decompressed...\n");
+                 //printf("\tWriting decompressed...\n");
 
-                delete[] dest;
                 file.write((char *) dest, uncompressed * sizeof(uint8_t));
+                delete[] dest;
             } else {
                 // write normal
-                printf("\tWriting normal...\n");
+                //printf("\tWriting normal...\n");
                 file.write((char *) src, asset.dataLength * sizeof(uint8_t));
             }
 

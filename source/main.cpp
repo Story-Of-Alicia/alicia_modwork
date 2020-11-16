@@ -9,11 +9,11 @@
 
 
 int main() {
-//    printf("Specify path to res.pak >");
-//    char path[512] = {0};
-//    scanf("%s", path);
+   printf("Specify path to res.pak >");
+   char path[512] = {0};
+   scanf("%s", path);
 
-    PakFile pak(R"(D:\games\Alicia\res.pak)");
+    PakFile pak(path);
     pak.LoadFromDisk();
 
     return 0;
