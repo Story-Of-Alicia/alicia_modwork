@@ -4,4 +4,5 @@ Exploring internals of AliciaOnline.
 Developed with MinGW64 toolchain.
 
 ## ModWork
-Alicia uses [PAK](theory/assets/pak.md) resource-sytem. Models(`.dff`)/textures(`.dds`)/animations(`.anm`) can be viewed in 3Dmax and Maya with plugins included in [RenderWareSDK](https://archive.org/details/RenderwareStudio3.7SDKForWindows), or alternatively downloaded from [here](http://www.tnlc.com/rw/files.html).
+Exploration of [PAK sytem](theory/assets/pak.md).
+Exploration of [Model system](theory/assets/models.md)
