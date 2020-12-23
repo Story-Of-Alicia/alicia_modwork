@@ -10,6 +10,7 @@ Alicia uses `DFF` file-format to store 3D models. You can view these models in b
 ## NPC 
 ...
 ## Vehicle (Horse)
+> graphics/vehicle
 - `h000` - stallion 
   - parts
   - physX
