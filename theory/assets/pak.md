@@ -5,7 +5,7 @@
 
 Reverse engineered with [ProcMon](https://docs.microsoft.com/en-us/sysinternals/downloads/procmon), [HxD](https://mh-nexus.de/en/hxd/), [and my bare hands](https://github.com/rgnter/alicia_modwork/tree/master/source).
 
-[@HSReina](https://github.com/hsreina) already made tool for unpacking(avialable on their website), but it isn't open-source. 
+[@HSReina](https://github.com/hsreina) already made tool for unpacking(available on their website), but it isn't open-source. 
 
 This PAK uses little endian byte sequence. 
 

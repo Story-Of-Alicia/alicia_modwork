@@ -27,8 +27,9 @@ void MagicPrint(const char *format, int arg) {
 void PrintAssetHTML(uint64_t index, const PakAsset &asset, uint64_t loc) {
     printf("\n");
     printf("<div class=\"asset\">\n");
-    printf("<p><span class=\"index\">#%llu</span> %ls <span class=\"loc\">[0x%llX]</span></p>\n", index,
-           asset.path.c_str(), loc);
+    printf("<p><span class=\"index\">#%llu</span> %ls <span class=\"loc\">[<span class=\"hex\">0x%llX]</span></span> %s </p>\n", index,
+           (asset.path[0] == 0 ? asset.path.c_str() : (L"<span class=\"red\">(missing path)</span>")),
+           loc, asset.isDeleted ? "<span class=\"red\">(deleted)</span>" : "");
     printf("<table class=\"table table-striped table-dark\">\n");
     printf("<tr><th>\n");
     printf("Field Name\n");
@@ -85,7 +86,7 @@ void PrintAssetHTML(uint64_t index, const PakAsset &asset, uint64_t loc) {
             "<tr>\n<td>\nUnknown5</td>\n<td>\n<code>int</code></td>\n<td>\n%u<span class=\"hex\">(0x%X)</span></td>\n<td>\n</tr>\n",
             asset.unknown5);
     MagicPrint(
-            "<tr>\n<td>\nUnknown6</td>\n<td>\n<code>int</code></td>\n<td>\n%u<span class=\"hex\">(0x%X)</span></td>\n<td>\n</tr>\n",
+            "<tr>\n<td>\nIs Deleted</td>\n<td>\n<code>int</code></td>\n<td>\n%u<span class=\"hex\">(0x%X)</span></td>\n<td>\n</tr>\n",
             asset.isDeleted);
     MagicPrint(
             "<tr>\n<td>\nEntry offset</td>\n<td>\n<code>int</code></td>\n<td>\n%u<span class=\"hex\">(0x%X)</span></td>\n<td>\n</tr>\n",
@@ -186,8 +187,9 @@ void PakFile::LoadFromDisk() {
                 .path = buf.ReadWideString(258)
         };
 
-        if (asset.unknownType == 0)
+        if (asset.unknownType == 0) {
             break;
+        }
 
         if (asset.isPacked) {
             uint64_t temp = ftell(this->fileHandle);
@@ -213,16 +215,16 @@ void PakFile::LoadFromDisk() {
                 sprintf(cPath, "deleted/deleted#%d.bin", count+1);
             }
 
-            std::ofstream file(cPath, std::ios::binary);
+          /**  std::ofstream file(cPath, std::ios::binary);
             if(!asset.isDeleted)
                 WriteToFile(file, src, length, asset.uncompressedLength0, asset.isCompressed);
             else {
                 // if uncompressed size is bad, write normal
                 if(!WriteToFile(file, src, length, asset.uncompressedLength0, true))
                     WriteToFile(file, src, length, length, false);
-            }
+            }*/
 
-            //PrintAssetHTML(count + 1, asset, assetLoc);
+            PrintAssetHTML(count + 1, asset, assetLoc);
             //printf("\tDone!\n");
 
             delete[] src;

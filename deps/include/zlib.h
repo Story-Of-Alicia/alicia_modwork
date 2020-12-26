@@ -70,7 +70,7 @@ extern "C" {
 
     The zlib format was designed to be compact and fast for use in memory
   and on communications channels.  The gzip format was designed for single-
-  file compression on file systems, has a larger header than zlib to maintain
+  pak compression on pak systems, has a larger header than zlib to maintain
   directory information, and uses a different, slower check method than zlib.
 
     The library does not install any signal handler.  The decoder checks
@@ -114,18 +114,18 @@ typedef z_stream FAR *z_streamp;
 typedef struct gz_header_s {
     int     text;       /* true if compressed data believed to be text */
     uLong   time;       /* modification time */
-    int     xflags;     /* extra flags (not used when writing a gzip file) */
+    int     xflags;     /* extra flags (not used when writing a gzip pak) */
     int     os;         /* operating system */
     Bytef   *extra;     /* pointer to extra field or Z_NULL if none */
     uInt    extra_len;  /* extra field length (valid if extra != Z_NULL) */
     uInt    extra_max;  /* space at extra (only when reading header) */
-    Bytef   *name;      /* pointer to zero-terminated file name or Z_NULL */
+    Bytef   *name;      /* pointer to zero-terminated pak name or Z_NULL */
     uInt    name_max;   /* space at name (only when reading header) */
     Bytef   *comment;   /* pointer to zero-terminated comment or Z_NULL */
     uInt    comm_max;   /* space at comment (only when reading header) */
     int     hcrc;       /* true if there was or will be a header crc */
     int     done;       /* true when done reading gzip header (not used
-                           when writing a gzip file) */
+                           when writing a gzip pak) */
 } gz_header;
 
 typedef gz_header FAR *gz_headerp;
@@ -220,7 +220,7 @@ typedef gz_header FAR *gz_headerp;
 ZEXTERN const char * ZEXPORT zlibVersion OF((void));
 /* The application can compare zlibVersion and ZLIB_VERSION for consistency.
    If the first character differs, the library code actually used is not
-   compatible with the zlib.h header file used by the application.  This check
+   compatible with the zlib.h header pak used by the application.  This check
    is automatically made by deflateInit and inflateInit.
  */
 
@@ -570,7 +570,7 @@ ZEXTERN int ZEXPORT deflateInit2 OF((z_streamp strm,
      windowBits can also be greater than 15 for optional gzip encoding.  Add
    16 to windowBits to write a simple gzip header and trailer around the
    compressed data instead of a zlib wrapper.  The gzip header will have no
-   file name, no extra data, no comment, no modification time (set to zero), no
+   pak name, no extra data, no comment, no modification time (set to zero), no
    header crc, and the operating system will be set to the appropriate value,
    if the operating system was determined at compile time.  If a gzip stream is
    being written, strm->adler is a CRC-32 instead of an Adler-32.
@@ -818,7 +818,7 @@ ZEXTERN int ZEXPORT deflateSetHeader OF((z_streamp strm,
    available there.  If hcrc is true, a gzip header crc is included.  Note that
    the current versions of the command-line version of gzip (up through version
    1.3.x) do not support header crc's, and will report that it is a "multi-part
-   gzip file" and give up.
+   gzip pak" and give up.
 
      If deflateSetHeader is not used, the default gzip header has text false,
    the time set to zero, and os set to 255, with no extra, name, or comment
@@ -1086,7 +1086,7 @@ ZEXTERN int ZEXPORT inflateBackInit OF((z_streamp strm, int windowBits,
      inflateBackInit will return Z_OK on success, Z_STREAM_ERROR if any of
    the parameters are invalid, Z_MEM_ERROR if the internal state could not be
    allocated, or Z_VERSION_ERROR if the version of the library does not match
-   the version of the header file.
+   the version of the header pak.
 */
 
 typedef unsigned (*in_func) OF((void FAR *,
@@ -1099,7 +1099,7 @@ ZEXTERN int ZEXPORT inflateBack OF((z_streamp strm,
 /*
      inflateBack() does a raw inflate with a single call using a call-back
    interface for input and output.  This is potentially more efficient than
-   inflate() for file i/o applications, in that it avoids copying between the
+   inflate() for pak i/o applications, in that it avoids copying between the
    output and the sliding window by simply making the window itself the output
    buffer.  inflate() can be faster on modern CPUs when used with large
    buffers.  inflateBack() trusts the application to not change the output
@@ -1288,7 +1288,7 @@ ZEXTERN int ZEXPORT uncompress2 OF((Bytef *dest,   uLongf *destLen,
    source bytes consumed.
 */
 
-                        /* gzip file access functions */
+                        /* gzip pak access functions */
 
 /*
      This library supports reading and writing files in gzip (.gz) format with
@@ -1297,12 +1297,12 @@ ZEXTERN int ZEXPORT uncompress2 OF((Bytef *dest,   uLongf *destLen,
    wrapper, documented in RFC 1952, wrapped around a deflate stream.
 */
 
-typedef struct gzFile_s *gzFile;    /* semi-opaque gzip file descriptor */
+typedef struct gzFile_s *gzFile;    /* semi-opaque gzip pak descriptor */
 
 /*
 ZEXTERN gzFile ZEXPORT gzopen OF((const char *path, const char *mode));
 
-     Opens a gzip (.gz) file for reading or writing.  The mode parameter is as
+     Opens a gzip (.gz) pak for reading or writing.  The mode parameter is as
    in fopen ("rb" or "wb") but can also include a compression level ("wb9") or
    a strategy: 'f' for filtered data as in "wb6f", 'h' for Huffman-only
    compression as in "wb1h", 'R' for run-length encoding as in "wb1R", or 'F'
@@ -1312,50 +1312,50 @@ ZEXTERN gzFile ZEXPORT gzopen OF((const char *path, const char *mode));
    the gzip format.
 
      "a" can be used instead of "w" to request that the gzip stream that will
-   be written be appended to the file.  "+" will result in an error, since
-   reading and writing to the same gzip file is not supported.  The addition of
-   "x" when writing will create the file exclusively, which fails if the file
+   be written be appended to the pak.  "+" will result in an error, since
+   reading and writing to the same gzip pak is not supported.  The addition of
+   "x" when writing will create the pak exclusively, which fails if the pak
    already exists.  On systems that support it, the addition of "e" when
-   reading or writing will set the flag to close the file on an execve() call.
+   reading or writing will set the flag to close the pak on an execve() call.
 
      These functions, as well as gzip, will read and decode a sequence of gzip
-   streams in a file.  The append function of gzopen() can be used to create
-   such a file.  (Also see gzflush() for another way to do this.)  When
-   appending, gzopen does not test whether the file begins with a gzip stream,
+   streams in a pak.  The append function of gzopen() can be used to create
+   such a pak.  (Also see gzflush() for another way to do this.)  When
+   appending, gzopen does not test whether the pak begins with a gzip stream,
    nor does it look for the end of the gzip streams to begin appending.  gzopen
-   will simply append a gzip stream to the existing file.
+   will simply append a gzip stream to the existing pak.
 
-     gzopen can be used to read a file which is not in gzip format; in this
-   case gzread will directly read from the file without decompression.  When
+     gzopen can be used to read a pak which is not in gzip format; in this
+   case gzread will directly read from the pak without decompression.  When
    reading, this will be detected automatically by looking for the magic two-
    byte gzip header.
 
-     gzopen returns NULL if the file could not be opened, if there was
+     gzopen returns NULL if the pak could not be opened, if there was
    insufficient memory to allocate the gzFile state, or if an invalid mode was
    specified (an 'r', 'w', or 'a' was not provided, or '+' was provided).
    errno can be checked to determine if the reason gzopen failed was that the
-   file could not be opened.
+   pak could not be opened.
 */
 
 ZEXTERN gzFile ZEXPORT gzdopen OF((int fd, const char *mode));
 /*
-     gzdopen associates a gzFile with the file descriptor fd.  File descriptors
-   are obtained from calls like open, dup, creat, pipe or fileno (if the file
+     gzdopen associates a gzFile with the pak descriptor fd.  File descriptors
+   are obtained from calls like open, dup, creat, pipe or fileno (if the pak
    has been previously opened with fopen).  The mode parameter is as in gzopen.
 
-     The next call of gzclose on the returned gzFile will also close the file
-   descriptor fd, just like fclose(fdopen(fd, mode)) closes the file descriptor
+     The next call of gzclose on the returned gzFile will also close the pak
+   descriptor fd, just like fclose(fdopen(fd, mode)) closes the pak descriptor
    fd.  If you want to keep fd open, use fd = dup(fd_keep); gz = gzdopen(fd,
    mode);.  The duplicated descriptor should be saved to avoid a leak, since
    gzdopen does not close fd if it fails.  If you are using fileno() to get the
-   file descriptor from a FILE *, then you will have to use dup() to avoid
-   double-close()ing the file descriptor.  Both gzclose() and fclose() will
-   close the associated file descriptor, so they need to have different file
+   pak descriptor from a FILE *, then you will have to use dup() to avoid
+   double-close()ing the pak descriptor.  Both gzclose() and fclose() will
+   close the associated pak descriptor, so they need to have different pak
    descriptors.
 
      gzdopen returns NULL if there was insufficient memory to allocate the
    gzFile state, if an invalid mode was specified (an 'r', 'w', or 'a' was not
-   provided, or '+' was provided), or if fd is -1.  The file descriptor is not
+   provided, or '+' was provided), or if fd is -1.  The pak descriptor is not
    used until the next gz* read, write, seek, or close operation, so gzdopen
    will not detect if fd is invalid (unless fd is -1).
 */
@@ -1365,7 +1365,7 @@ ZEXTERN int ZEXPORT gzbuffer OF((gzFile file, unsigned size));
      Set the internal buffer size used by this library's functions.  The
    default buffer size is 8192 bytes.  This function must be called after
    gzopen() or gzdopen(), and before any other calls that read or write the
-   file.  The buffer memory allocation is always deferred to the first read or
+   pak.  The buffer memory allocation is always deferred to the first read or
    write.  Three times that size in buffer space is allocated.  A larger buffer
    size of, for example, 64K or 128K bytes will noticeably increase the speed
    of decompression (reading).
@@ -1382,29 +1382,29 @@ ZEXTERN int ZEXPORT gzsetparams OF((gzFile file, int level, int strategy));
    of deflateInit2 for the meaning of these parameters.  Previously provided
    data is flushed before the parameter change.
 
-     gzsetparams returns Z_OK if success, Z_STREAM_ERROR if the file was not
+     gzsetparams returns Z_OK if success, Z_STREAM_ERROR if the pak was not
    opened for writing, Z_ERRNO if there is an error writing the flushed data,
    or Z_MEM_ERROR if there is a memory allocation error.
 */
 
 ZEXTERN int ZEXPORT gzread OF((gzFile file, voidp buf, unsigned len));
 /*
-     Reads the given number of uncompressed bytes from the compressed file.  If
-   the input file is not in gzip format, gzread copies the given number of
-   bytes into the buffer directly from the file.
+     Reads the given number of uncompressed bytes from the compressed pak.  If
+   the input pak is not in gzip format, gzread copies the given number of
+   bytes into the buffer directly from the pak.
 
      After reaching the end of a gzip stream in the input, gzread will continue
    to read, looking for another gzip stream.  Any number of gzip streams may be
-   concatenated in the input file, and will all be decompressed by gzread().
+   concatenated in the input pak, and will all be decompressed by gzread().
    If something other than a gzip stream is encountered after a gzip stream,
    that remaining trailing garbage is ignored (and no error is returned).
 
-     gzread can be used to read a gzip file that is being concurrently written.
+     gzread can be used to read a gzip pak that is being concurrently written.
    Upon reaching the end of the input, gzread will return with the available
    data.  If the error code returned by gzerror is Z_OK or Z_BUF_ERROR, then
-   gzclearerr can be used to clear the end of file indicator in order to permit
+   gzclearerr can be used to clear the end of pak indicator in order to permit
    gzread to be tried again.  Z_OK indicates that a gzip stream was completed
-   on the last gzread.  Z_BUF_ERROR indicates that the input file ended in the
+   on the last gzread.  Z_BUF_ERROR indicates that the input pak ended in the
    middle of a gzip stream.  Note that gzread does not return -1 in the event
    of an incomplete gzip stream.  This error is deferred until gzclose(), which
    will return Z_BUF_ERROR if the last gzread ended in the middle of a gzip
@@ -1412,7 +1412,7 @@ ZEXTERN int ZEXPORT gzread OF((gzFile file, voidp buf, unsigned len));
    case.
 
      gzread returns the number of uncompressed bytes actually read, less than
-   len for end of file, or -1 for error.  If len is too large to fit in an int,
+   len for end of pak, or -1 for error.  If len is too large to fit in an int,
    then nothing is read, -1 is returned, and the error state is set to
    Z_STREAM_ERROR.
 */
@@ -1420,33 +1420,33 @@ ZEXTERN int ZEXPORT gzread OF((gzFile file, voidp buf, unsigned len));
 ZEXTERN z_size_t ZEXPORT gzfread OF((voidp buf, z_size_t size, z_size_t nitems,
                                      gzFile file));
 /*
-     Read up to nitems items of size size from file to buf, otherwise operating
+     Read up to nitems items of size size from pak to buf, otherwise operating
    as gzread() does.  This duplicates the interface of stdio's fread(), with
    size_t request and return types.  If the library defines size_t, then
    z_size_t is identical to size_t.  If not, then z_size_t is an unsigned
    integer type that can contain a pointer.
 
      gzfread() returns the number of full items read of size size, or zero if
-   the end of the file was reached and a full item could not be read, or if
+   the end of the pak was reached and a full item could not be read, or if
    there was an error.  gzerror() must be consulted if zero is returned in
    order to determine if there was an error.  If the multiplication of size and
    nitems overflows, i.e. the product does not fit in a z_size_t, then nothing
    is read, zero is returned, and the error state is set to Z_STREAM_ERROR.
 
-     In the event that the end of file is reached and only a partial item is
+     In the event that the end of pak is reached and only a partial item is
    available at the end, i.e. the remaining uncompressed data length is not a
    multiple of size, then the final partial item is nevetheless read into buf
-   and the end-of-file flag is set.  The length of the partial item read is not
+   and the end-of-pak flag is set.  The length of the partial item read is not
    provided, but could be inferred from the result of gztell().  This behavior
    is the same as the behavior of fread() implementations in common libraries,
    but it prevents the direct use of gzfread() to read a concurrently written
-   file, reseting and retrying on end-of-file, when size is not 1.
+   pak, reseting and retrying on end-of-pak, when size is not 1.
 */
 
 ZEXTERN int ZEXPORT gzwrite OF((gzFile file,
                                 voidpc buf, unsigned len));
 /*
-     Writes the given number of uncompressed bytes into the compressed file.
+     Writes the given number of uncompressed bytes into the compressed pak.
    gzwrite returns the number of uncompressed bytes written or 0 in case of
    error.
 */
@@ -1454,7 +1454,7 @@ ZEXTERN int ZEXPORT gzwrite OF((gzFile file,
 ZEXTERN z_size_t ZEXPORT gzfwrite OF((voidpc buf, z_size_t size,
                                       z_size_t nitems, gzFile file));
 /*
-     gzfwrite() writes nitems items of size size from buf to file, duplicating
+     gzfwrite() writes nitems items of size size from buf to pak, duplicating
    the interface of stdio's fwrite(), with size_t request and return types.  If
    the library defines size_t, then z_size_t is identical to size_t.  If not,
    then z_size_t is an unsigned integer type that can contain a pointer.
@@ -1467,7 +1467,7 @@ ZEXTERN z_size_t ZEXPORT gzfwrite OF((voidpc buf, z_size_t size,
 
 ZEXTERN int ZEXPORTVA gzprintf Z_ARG((gzFile file, const char *format, ...));
 /*
-     Converts, formats, and writes the arguments to the compressed file under
+     Converts, formats, and writes the arguments to the compressed pak under
    control of the format string, as in fprintf.  gzprintf returns the number of
    uncompressed bytes actually written, or a negative zlib error code in case
    of error.  The number of uncompressed bytes written is limited to 8191, or
@@ -1482,7 +1482,7 @@ ZEXTERN int ZEXPORTVA gzprintf Z_ARG((gzFile file, const char *format, ...));
 
 ZEXTERN int ZEXPORT gzputs OF((gzFile file, const char *s));
 /*
-     Writes the given null-terminated string to the compressed file, excluding
+     Writes the given null-terminated string to the compressed pak, excluding
    the terminating null character.
 
      gzputs returns the number of characters written, or -1 in case of error.
@@ -1490,29 +1490,29 @@ ZEXTERN int ZEXPORT gzputs OF((gzFile file, const char *s));
 
 ZEXTERN char * ZEXPORT gzgets OF((gzFile file, char *buf, int len));
 /*
-     Reads bytes from the compressed file until len-1 characters are read, or a
-   newline character is read and transferred to buf, or an end-of-file
+     Reads bytes from the compressed pak until len-1 characters are read, or a
+   newline character is read and transferred to buf, or an end-of-pak
    condition is encountered.  If any characters are read or if len == 1, the
    string is terminated with a null character.  If no characters are read due
-   to an end-of-file or len < 1, then the buffer is left untouched.
+   to an end-of-pak or len < 1, then the buffer is left untouched.
 
      gzgets returns buf which is a null-terminated string, or it returns NULL
-   for end-of-file or in case of error.  If there was an error, the contents at
+   for end-of-pak or in case of error.  If there was an error, the contents at
    buf are indeterminate.
 */
 
 ZEXTERN int ZEXPORT gzputc OF((gzFile file, int c));
 /*
-     Writes c, converted to an unsigned char, into the compressed file.  gzputc
+     Writes c, converted to an unsigned char, into the compressed pak.  gzputc
    returns the value that was written, or -1 in case of error.
 */
 
 ZEXTERN int ZEXPORT gzgetc OF((gzFile file));
 /*
-     Reads one byte from the compressed file.  gzgetc returns this byte or -1
-   in case of end of file or error.  This is implemented as a macro for speed.
+     Reads one byte from the compressed pak.  gzgetc returns this byte or -1
+   in case of end of pak or error.  This is implemented as a macro for speed.
    As such, it does not do all of the checking the other functions do.  I.e.
-   it does not check to see if file is NULL, nor whether the structure file
+   it does not check to see if pak is NULL, nor whether the structure pak
    points to has been clobbered or not.
 */
 
@@ -1530,7 +1530,7 @@ ZEXTERN int ZEXPORT gzungetc OF((int c, gzFile file));
 
 ZEXTERN int ZEXPORT gzflush OF((gzFile file, int flush));
 /*
-     Flushes all pending output into the compressed file.  The parameter flush
+     Flushes all pending output into the compressed pak.  The parameter flush
    is as in the deflate() function.  The return value is the zlib error number
    (see function gzerror below).  gzflush is only permitted when writing.
 
@@ -1544,47 +1544,47 @@ ZEXTERN int ZEXPORT gzflush OF((gzFile file, int flush));
 */
 
 /*
-ZEXTERN z_off_t ZEXPORT gzseek OF((gzFile file,
+ZEXTERN z_off_t ZEXPORT gzseek OF((gzFile pak,
                                    z_off_t offset, int whence));
 
      Sets the starting position for the next gzread or gzwrite on the given
-   compressed file.  The offset represents a number of bytes in the
+   compressed pak.  The offset represents a number of bytes in the
    uncompressed data stream.  The whence parameter is defined as in lseek(2);
    the value SEEK_END is not supported.
 
-     If the file is opened for reading, this function is emulated but can be
-   extremely slow.  If the file is opened for writing, only forward seeks are
+     If the pak is opened for reading, this function is emulated but can be
+   extremely slow.  If the pak is opened for writing, only forward seeks are
    supported; gzseek then compresses a sequence of zeroes up to the new
    starting position.
 
      gzseek returns the resulting offset location as measured in bytes from
    the beginning of the uncompressed stream, or -1 in case of error, in
-   particular if the file is opened for writing and the new starting position
+   particular if the pak is opened for writing and the new starting position
    would be before the current position.
 */
 
 ZEXTERN int ZEXPORT    gzrewind OF((gzFile file));
 /*
-     Rewinds the given file. This function is supported only for reading.
+     Rewinds the given pak. This function is supported only for reading.
 
-     gzrewind(file) is equivalent to (int)gzseek(file, 0L, SEEK_SET)
+     gzrewind(pak) is equivalent to (int)gzseek(pak, 0L, SEEK_SET)
 */
 
 /*
-ZEXTERN z_off_t ZEXPORT    gztell OF((gzFile file));
+ZEXTERN z_off_t ZEXPORT    gztell OF((gzFile pak));
 
      Returns the starting position for the next gzread or gzwrite on the given
-   compressed file.  This position represents a number of bytes in the
+   compressed pak.  This position represents a number of bytes in the
    uncompressed data stream, and is zero when starting, even if appending or
-   reading a gzip stream from the middle of a file using gzdopen().
+   reading a gzip stream from the middle of a pak using gzdopen().
 
-     gztell(file) is equivalent to gzseek(file, 0L, SEEK_CUR)
+     gztell(pak) is equivalent to gzseek(pak, 0L, SEEK_CUR)
 */
 
 /*
-ZEXTERN z_off_t ZEXPORT gzoffset OF((gzFile file));
+ZEXTERN z_off_t ZEXPORT gzoffset OF((gzFile pak));
 
-     Returns the current offset in the file being read or written.  This offset
+     Returns the current offset in the pak being read or written.  This offset
    includes the count of bytes that precede the gzip stream, for example when
    appending or when using gzdopen() for reading.  When reading, the offset
    does not include as yet unused buffered input.  This information can be used
@@ -1593,30 +1593,30 @@ ZEXTERN z_off_t ZEXPORT gzoffset OF((gzFile file));
 
 ZEXTERN int ZEXPORT gzeof OF((gzFile file));
 /*
-     Returns true (1) if the end-of-file indicator has been set while reading,
-   false (0) otherwise.  Note that the end-of-file indicator is set only if the
+     Returns true (1) if the end-of-pak indicator has been set while reading,
+   false (0) otherwise.  Note that the end-of-pak indicator is set only if the
    read tried to go past the end of the input, but came up short.  Therefore,
    just like feof(), gzeof() may return false even if there is no more data to
    read, in the event that the last read request was for the exact number of
-   bytes remaining in the input file.  This will happen if the input file size
+   bytes remaining in the input pak.  This will happen if the input pak size
    is an exact multiple of the buffer size.
 
      If gzeof() returns true, then the read functions will return no more data,
-   unless the end-of-file indicator is reset by gzclearerr() and the input file
-   has grown since the previous end of file was detected.
+   unless the end-of-pak indicator is reset by gzclearerr() and the input pak
+   has grown since the previous end of pak was detected.
 */
 
 ZEXTERN int ZEXPORT gzdirect OF((gzFile file));
 /*
-     Returns true (1) if file is being copied directly while reading, or false
-   (0) if file is a gzip stream being decompressed.
+     Returns true (1) if pak is being copied directly while reading, or false
+   (0) if pak is a gzip stream being decompressed.
 
-     If the input file is empty, gzdirect() will return true, since the input
+     If the input pak is empty, gzdirect() will return true, since the input
    does not contain a gzip stream.
 
      If gzdirect() is used immediately after gzopen() or gzdopen() it will
-   cause buffers to be allocated to allow reading the file to determine if it
-   is a gzip file.  Therefore if gzbuffer() is used, it should be called before
+   cause buffers to be allocated to allow reading the pak to determine if it
+   is a gzip pak.  Therefore if gzbuffer() is used, it should be called before
    gzdirect().
 
      When writing, gzdirect() returns true (1) if transparent writing was
@@ -1624,19 +1624,19 @@ ZEXTERN int ZEXPORT gzdirect OF((gzFile file));
    gzdirect() is not needed when writing.  Transparent writing must be
    explicitly requested, so the application already knows the answer.  When
    linking statically, using gzdirect() will include all of the zlib code for
-   gzip file reading and decompression, which may not be desired.)
+   gzip pak reading and decompression, which may not be desired.)
 */
 
 ZEXTERN int ZEXPORT    gzclose OF((gzFile file));
 /*
-     Flushes all pending output if necessary, closes the compressed file and
-   deallocates the (de)compression state.  Note that once file is closed, you
-   cannot call gzerror with file, since its structures have been deallocated.
-   gzclose must not be called more than once on the same file, just as free
+     Flushes all pending output if necessary, closes the compressed pak and
+   deallocates the (de)compression state.  Note that once pak is closed, you
+   cannot call gzerror with pak, since its structures have been deallocated.
+   gzclose must not be called more than once on the same pak, just as free
    must not be called more than once on the same allocation.
 
-     gzclose will return Z_STREAM_ERROR if file is not valid, Z_ERRNO on a
-   file operation error, Z_MEM_ERROR if out of memory, Z_BUF_ERROR if the
+     gzclose will return Z_STREAM_ERROR if pak is not valid, Z_ERRNO on a
+   pak operation error, Z_MEM_ERROR if out of memory, Z_BUF_ERROR if the
    last read ended in the middle of a gzip stream, or Z_OK on success.
 */
 
@@ -1655,24 +1655,24 @@ ZEXTERN int ZEXPORT gzclose_w OF((gzFile file));
 ZEXTERN const char * ZEXPORT gzerror OF((gzFile file, int *errnum));
 /*
      Returns the error message for the last error which occurred on the given
-   compressed file.  errnum is set to zlib error number.  If an error occurred
-   in the file system and not in the compression library, errnum is set to
+   compressed pak.  errnum is set to zlib error number.  If an error occurred
+   in the pak system and not in the compression library, errnum is set to
    Z_ERRNO and the application may consult errno to get the exact error code.
 
      The application must not modify the returned string.  Future calls to
-   this function may invalidate the previously returned string.  If file is
+   this function may invalidate the previously returned string.  If pak is
    closed, then the string previously returned by gzerror will no longer be
    available.
 
-     gzerror() should be used to distinguish errors from end-of-file for those
+     gzerror() should be used to distinguish errors from end-of-pak for those
    functions above that do not distinguish those cases in their return values.
 */
 
 ZEXTERN void ZEXPORT gzclearerr OF((gzFile file));
 /*
-     Clears the error and end-of-file flags for file.  This is analogous to the
+     Clears the error and end-of-pak flags for pak.  This is analogous to the
    clearerr() function in stdio.  This is useful for continuing to read a gzip
-   file that is being written concurrently.
+   pak that is being written concurrently.
 */
 
 #endif /* !Z_SOLO */
@@ -1833,7 +1833,7 @@ ZEXTERN int ZEXPORT gzgetc_ OF((gzFile file));  /* backward compatibility */
  * change the regular functions to 64 bits if _FILE_OFFSET_BITS is 64 (if
  * both are true, the application gets the *64 functions, and the regular
  * functions are changed to 64 bits) -- in case these are set on systems
- * without large file support, _LFS64_LARGEFILE must also be true
+ * without large pak support, _LFS64_LARGEFILE must also be true
  */
 #ifdef Z_LARGE64
    ZEXTERN gzFile ZEXPORT gzopen64 OF((const char *, const char *));

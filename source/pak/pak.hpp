@@ -60,7 +60,7 @@ struct PakAsset {
 public:
     /***
      *
-     * @return Standard cstr path to file
+     * @return Standard cstr path to pak
      */
      char* GetStandardPath() {
         uint32_t length = path.length();
@@ -137,7 +137,7 @@ public:
 public:
     /**
      * Default constructor
-     * @param path Path to PAK file
+     * @param path Path to PAK pak
      */
     explicit PakFile(const char* path);
 
