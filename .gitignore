@@ -1,5 +1,11 @@
 # JetBrains
 *.iml
 .idea/
+
 # CMake
 cmake-build-debug/
+
+
+# VS
+.vs/
+out/

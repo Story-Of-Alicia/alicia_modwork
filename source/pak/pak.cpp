@@ -141,7 +141,7 @@ uint64_t WriteToFile(std::ofstream &file, uint8_t* data, uint64_t length, uint64
     }
 }
 
-void PakFile::LoadFromDisk() {
+void PakFile::Explore() {
 
     fseek(this->fileHandle, PakFile::ENTRY_SECTOR + 12, SEEK_SET);
 
@@ -191,7 +191,11 @@ void PakFile::LoadFromDisk() {
             break;
         }
 
+
+        printf("#%d - %s", count + 1, asset.HasPath() ? asset.GetStandardPath() : "(no path)...");
+
         if (asset.isPacked) {
+            printf(" Packed...");
             uint64_t temp = ftell(this->fileHandle);
             fseek(this->fileHandle, asset.dataOffset, SEEK_SET);
 
@@ -206,31 +210,43 @@ void PakFile::LoadFromDisk() {
                 cPath = new char[512];
 
             if (!asset.isDeleted) {
-                // dirname modifies original string
-                char *dirs = dirname(asset.GetStandardPath());
+                char directory[128];
+                _splitpath(cPath, nullptr, directory, nullptr, nullptr);
+            	
                 // printf("Dir: %s | Path: %s\n", dirs, cPath);
-                std::filesystem::create_directories(dirs);
+                std::filesystem::create_directories(directory);
+
             } else {
                 std::filesystem::create_directory("deleted/");
-                sprintf(cPath, "deleted/deleted#%d.bin", count+1);
+                sprintf(cPath, "deleted/deleted#%llu.bin", count+1);
+                printf(" Deleted...");
             }
 
-          /**  std::ofstream file(cPath, std::ios::binary);
-            if(!asset.isDeleted)
+            if (asset.isCompressed)
+                printf(" Compressed...");
+
+            std::ofstream file(cPath, std::ios::binary);
+            if (!asset.isDeleted)  
                 WriteToFile(file, src, length, asset.uncompressedLength0, asset.isCompressed);
             else {
                 // if uncompressed size is bad, write normal
                 if(!WriteToFile(file, src, length, asset.uncompressedLength0, true))
                     WriteToFile(file, src, length, length, false);
-            }*/
+            }
 
-            PrintAssetHTML(count + 1, asset, assetLoc);
+            //PrintAssetHTML(count + 1, asset, assetLoc);
             //printf("\tDone!\n");
 
+        	
             delete[] src;
             delete (cPath);
             fseek(this->fileHandle, temp, SEEK_SET);
         }
+        else
+            printf(" Not packed! Skip!");
+
+        printf(" Done!\n");
+    	
         count++;
     }
 

@@ -12,7 +12,6 @@
 #include <unordered_map>
 #include <string>
 #include <zlib.h>
-#include <libgen.h>
 #include <fstream>
 #include <filesystem>
 
@@ -74,7 +73,7 @@ public:
             // paths don't contain any widechars, we can just cast it and loose the most bits place
             cPath[i] = (char) cwPath[i];
         }
-        cPath[length] = '\0';
+        cPath[length] = 0;
 
         return cPath;
     }
@@ -150,7 +149,7 @@ public:
     /**
      * Loads PAK from disk
      */
-    void LoadFromDisk();
+    void Explore();
 
     /**
      * Destroys all data
