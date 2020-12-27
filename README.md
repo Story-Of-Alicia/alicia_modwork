@@ -4,5 +4,7 @@ Exploring internals of AliciaOnline.
 Developed with MSVC toolchain.
 
 ## ModWork
-Exploration of [PAK sytem](theory/assets/pak.md).
-Exploration of [Model system](theory/assets/models.md)
+- [Network system](theory/networking/network.md)
+- [Config system](theory/configuration/config.md)
+- [Asset sytem](theory/assets/pak.md).
+- [Model system](theory/assets/models.md).
