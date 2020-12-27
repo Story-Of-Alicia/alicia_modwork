@@ -45,7 +45,7 @@ std::vector<uint32_t> GetProcessPorts(uint32_t pid) {
     DWORD tableBuff = sizeof(MIB_TCPTABLE_OWNER_PID);
     DWORD result    = 0; 
     PMIB_TCPTABLE_OWNER_PID tcpTable = static_cast<PMIB_TCPTABLE_OWNER_PID>(malloc(sizeof(PMIB_TCPTABLE_OWNER_PID)));
-
+     
 
     if((result = GetExtendedTcpTable(tcpTable, &tableBuff, TRUE, AF_INET, TCP_TABLE_OWNER_PID_LISTENER, 0)) != NO_ERROR) {
         if(result == ERROR_INSUFFICIENT_BUFFER)
@@ -80,40 +80,58 @@ std::vector<uint32_t> GetProcessPorts(uint32_t pid) {
     return ports;
 }
 
+std::string SelectPathToPak(const char* workingDir)
+{
 
-int main(int argc, char** argv) {
-    printf("Work dir: %s\n", argv[0]);
+    char path[MAX_PATH]       = { 0 };
 	
-    char path[MAX_PATH] = "";
     OPENFILENAME ofn;
     ZeroMemory(&ofn, sizeof(OPENFILENAME));
-	
+
     ofn.lStructSize = sizeof(OPENFILENAME);
     ofn.lpstrFilter = "PAK File (*.pak)\0*.pak\0";
     ofn.lpstrFile = path;
-    ofn.lpstrInitialDir = argv[0];
+    ofn.lpstrInitialDir = workingDir;
     ofn.lpstrTitle = "Select PAK";
     ofn.nMaxFile = MAX_PATH;
-    ofn.Flags = OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_ENABLESIZING;
+    ofn.Flags = OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_ENABLESIZING | OFN_NOCHANGEDIR;
     ofn.lpstrDefExt = "";
-	
+
     if (!GetOpenFileName(&ofn)) {
         printf("Path to PAK > ");
         scanf("%s", path);
     }
     else
         printf("File selected... \n");
-	
-    int result = MessageBox(nullptr, "Game files will be extracted to current working directory.\nDo you want to continue?", "Working directory", MB_ICONEXCLAMATION | MB_YESNO);
-	if(result == IDNO)
-	{
+
+
+    return std::string(path);
+}
+
+int main(int argc, char** argv) {
+    const char* workingDir = argv[0];
+    printf("Work dir: %s\n", workingDir);
+
+    std::string path = SelectPathToPak(workingDir);
+
+    const char* msgFormat = "Game files will be extracted to current working directory: \n(%s).\n\nDo you want to continue?";
+    const uint32_t bufSize = strlen(msgFormat) + strlen(workingDir) + 1;
+    char* msgBuff = new char[bufSize];
+
+    sprintf(msgBuff, msgFormat, argv[0]);
+
+    int result = MessageBox(nullptr, msgBuff, "Working directory", MB_ICONEXCLAMATION | MB_YESNO | MB_TOPMOST);
+    if (result == IDNO)
+    {
         printf("Cancelled by user.\n");
         return -2;
-	}
+    }
+    delete[] msgBuff;
 	
-	PakFile pak(path);
+	PakFile pak(path.c_str());
     pak.Explore();
 
+    printf("\nType anything to exit.\n");
     scanf("%c");
     return 0;
 }

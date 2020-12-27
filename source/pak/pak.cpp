@@ -235,7 +235,6 @@ void PakFile::Explore() {
             }
 
             //PrintAssetHTML(count + 1, asset, assetLoc);
-            //printf("\tDone!\n");
 
         	
             delete[] src;
@@ -245,12 +244,12 @@ void PakFile::Explore() {
         else
             printf(" Not packed! Skip!");
 
-        printf(" Done!\n");
+        printf(" Done! %-128s\r\n", asset.path);
     	
         count++;
     }
 
-    printf("%llu\n", count);
+    printf("\n%llu\n", count);
 }
 
 
