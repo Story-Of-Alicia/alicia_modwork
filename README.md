@@ -1,7 +1,7 @@
 # alicia_modwork
 Exploring internals of AliciaOnline.
 
-Developed with MinGW64 toolchain.
+Developed with MSVC toolchain.
 
 ## ModWork
 Exploration of [PAK sytem](theory/assets/pak.md).
