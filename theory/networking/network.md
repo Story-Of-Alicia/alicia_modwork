@@ -1,13 +1,17 @@
-# Networking
-Legend:
-> **<->** - Request/Response connection. Port on left side usually requests, port on right side usually responds
+# Network
+Reverse engineering Alicia network.
 
-## Gametree Launcher
+## Loopback endpoints
+Communication endpoints in **AliciaLauncher** and **AliciaGame** are done with **HTTP/1.1***(over TCP/IP)*. 
 
-## Alicia Launcher
+### Protocol
 
-## Alicia Game
-#### External
-External TCP/IP ports: `64564`
-#### Internal 
-Internal Loopback TCP/IP ports: `8500`*<->* `x`, `10030` *<->* `x+1`
+#### Endpoints
+###### AliciaLauncher
+Runs on port `8512`
+- `/Client`
+	- `/GameInfo.dat` - LUA Script that configures launcher.
+- `/Patch` 
+    - `/Datas` - Contains game assets
+- `/LauncherContents`
+###### AliciaGame
