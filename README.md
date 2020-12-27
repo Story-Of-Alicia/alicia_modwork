@@ -1,11 +1,13 @@
 # alicia_modwork
 Exploring AliciaOnline.
 
-## Systems
+## Exploration
+### systems
 - [Network system](theory/networking/network.md)
 - [Config system](theory/configuration/config.md)
 - [Asset sytem](theory/assets/pak.md)
 - [Model system](theory/assets/models.md)
 
-## barehands
+## Tools
+### barehands
 Program developed in C++ using MSVC toolchain. 
