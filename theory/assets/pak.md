@@ -3,68 +3,84 @@
 
 > AliciaOnline version: `v1.318`. 
 
-Reverse engineered with [ProcMon](https://docs.microsoft.com/en-us/sysinternals/downloads/procmon), [HxD](https://mh-nexus.de/en/hxd/), [and my bare hands](https://github.com/rgnter/alicia_modwork/tree/master/source).
 
-[@HSReina](https://github.com/hsreina) already made tool for unpacking(available on their website), but it isn't open-source. 
+Alicia PAK(*„PAKS“*) stores asset headers and asset data. PAKS has little-endian bytesequence and all text(that is loaded by game engine) has UTF-16(LE) encoding. Reverse engineered with [ProcMon](https://docs.microsoft.com/en-us/sysuint32ernals/downloads/procmon), [HxD](https://mh-nexus.de/en/hxd/), [and my bare hands](https://github.com/rgnter/alicia_modwork/tree/master/source).
 
-This PAK uses little endian byte sequence. 
+[@HSReina](https://github.com/hsreina) already made tool for unpacking(available on their website), but it isn't open-source and doesn't say anything about codec of PAKS. 
 
-#### PAK Header
-Header of PAK file with size of 44 bytes.
-###### Header format
+#### PAKS Begin Sector `0x00000`
+##### PAKS Header(*„paks header“*)
+Contains information about PAKS file.
+###### Header codec
+> `Total size: 40 bytes`
+
 | Field type | Field name              | Notes   |
 | ---------- | ----------------------- | ------- |
-| `int`      | Header magic  | Always `{0x50 0x41 0x4B 0x53}` (ANSI "PAKS") |
-| `int`      | Unknown       | |
-| `int`      | Unknown       | |
-| `int`      | Unknown       | |
-| `int`      | Length        | File length in bytes |
-| `int`      | Unknown       | |
-| `int`      | Unknown magic | Always `{0x4E 0x50 0x48 0x53}` (ANSI "NPHS") |
-| `int`      | Unknown       | Seems to always be 0x0 |
+| `uint32`      | Header magic  | Always `{0x50 0x41 0x4B 0x53}` (ANSI "PAKS") |
+| `uint32`      | Unknown 1       | |
+| `uint32`      | Unknown 2      | |
+| `uint32`      | Unknown 3      | |
+| `uint32`      | Asset data count       | ?? |
+| `uint32`      | Implemented asset data count          |  (Functional asset data count) ?? |
+| `uint32`      | Deleted asset data count       |  (Deleted asset count) ?? |
+| `uint32`      | File size        | (in bytes) |
+| `uint32`      | Style magic| Always `{0x4E 0x50 0x48 0x53}` (ANSI "NPHS") |
 
 
-#### PAK Assets
-##### Entries
-Assets start at sector: `0x7D000` prefixed with ansi magic `FILSFILZ` followed by unknown 4 bytes that are skipped. Each entry has size of 620 bytes. First 108 bytes are allocated for entry info, and other 512 bytes are allocated for path.
- 
-###### Entry format
+#### PAKS Asset Header Sector `0x7D000`
+##### Asset Array Header
+Asset Array Header.
+###### Asset Array Header codec
+> `Total size: 12 bytes`
+
 | Field type | Field name              | Notes      |
 | ---------- | ----------------------- | -------    |
-| `int`      | Asset prefix            | Always 0x0 | 
-| `int`      | Asset magic             | |
-| `int`      | Data offset             | Offset of data from beginning of PAK file. Only present if file is packed |
-| `int`      | Data length             | Data length in bytes. Only present if file is packed |
-| `int`      | Uncompressed length0    | Uncompressed length of data |
-| `int`      | Is compressed           | Int that is used as boolean to indicate if data are compressed |
-| `int`      | Uncompressed length1    | -- |
-| `int`      | Unknown0                | Always 0x0 |
-| `int`      | Uncompressed length2    | -- |
-| `int`      | Unknown1                | |
-| `int`      | Unknown2                | |
-| `int`      | Unknown3                | |
-| `int`      | Unknown4                | |
-| `int`      | Unknown5                | |
-| `int`      | Is Deleted              | Marks asset as deleted, has info only about offset and length|
-| `int`      | Entry offset            | Offset of this entry from beginning of PAK file|
-| `int`      | Is packed               | Int that is used as boolean to indicate if file is embeded in pak |
-| `long`     | Unknown type            | Always ANSI "FIS\0"|
-| `long`     | Unknown value           | |
-| `int`      | CRC Result              | CRC checksum of Data |
-| `int`      | Unknown9                | |
-| `int`      | CRC Identification      | Always ANSI "CRC2"|
-| `int`      | Unknown 7               | |
-| `long`     | Unknown 8               | |
-| `wstr`     | Path (512bytes)         | |
+| `uint64`   | AHA magic               | Always ANSI "FILSFILZ" | 
+| `uint32`   | Asset count             | Total asset count |
 
-##### Data
-Data start at sector: `0xF00000`. 
 
-###### Data format
+##### PAKS Asset Header(*„asset header“*)
+Asset header contains information about **asset** and it's *data*. If it's data is encoded in PAK, we reffer to it's data as „asset data“. Otherwise, we reffer to it as „data“ or „extern data“.
+
+
+###### Asset Header codec
+> `Total size: 620 bytes`
+
+| Field type | Field name              | Notes      |
+| ---------- | ----------------------- | -------    |
+| `uint32`      | Asset prefix            | Always 0x0 | 
+| `uint32`      | Asset magic             | values between 0x30 and 0x40 (??) |
+| `uint32`      | Data offset             | Offset of data from beginning of PAK file. Only present if file is packed |
+| `uint32`      | Data length             | Data length in bytes. Only present if file is packed |
+| `uint32`      | Uncompressed length0    | Uncompressed length of data |
+| `uint32`      | Is compressed           | uint32 that is used as boolean to indicate if data are compressed |
+| `uint32`      | Uncompressed length1    | -- |
+| `uint32`      | Unknown0                | Always 0x0 |
+| `uint32`      | Uncompressed length2    | -- |
+| `uint32`      | Unknown1                | |
+| `uint32`      | Unknown2                | |
+| `uint32`      | Unknown3                | |
+| `uint32`      | Unknown4                | |
+| `uint32`      | Unknown5                | |
+| `uint32`      | Is Deleted              | Marks asset as deleted, has info only about offset and length|
+| `uint32`      | Entry offset            | Offset of this entry from beginning of PAK file|
+| `uint32`      | Is packed               | uint32 that is used as boolean to indicate if file is embeded in pak |
+| `uint64`     | Unknown type             | Always ANSI "FIS\0"|
+| `uint64`     | Unknown value            | |
+| `uint32`      | CRC Result              | CRC checksum of Data |
+| `uint32`      | Unknown9                | |
+| `uint32`      | CRC Identification      | Always ANSI "CRC2"|
+| `uint32`      | Unknown 7               | |
+| `uint64`     | Unknown 8                | |
+| `wstr`     | Path (512bytes total)      | |
+
+#### PAKS Asset Data Sector `0xF00000`
+##### PAKS Asset Data(*„asset data“*)
+Nothing special about this part.
+###### Asset Data codec
 
 | Field type | Field name              | Notes   |
 | ---------- | ----------------------- | ------- |
-| `void`     | Asset-specific data     | Seems to contain some specific information for asset |
 | `void`     | Variable asset data     | Actual data | 
 
 ### Data compression
