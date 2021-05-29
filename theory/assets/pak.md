@@ -16,15 +16,15 @@ Contains information about PAKS file.
 
 | Field type | Field name              | Notes   |
 | ---------- | ----------------------- | ------- |
-| `uint32`      | Header magic  | Always `{0x50 0x41 0x4B 0x53}` (ANSI "PAKS") |
-| `uint32`      | Unknown 1       | |
-| `uint32`      | Unknown 2      | |
-| `uint32`      | Unknown 3      | |
-| `uint32`      | Asset data count       | ?? |
-| `uint32`      | Implemented asset data count          |  (Functional asset data count) ?? |
-| `uint32`      | Deleted asset data count       |  (Deleted asset count) ?? |
-| `uint32`      | File size        | (in bytes) |
-| `uint32`      | Style magic| Always `{0x4E 0x50 0x48 0x53}` (ANSI "NPHS") |
+| `uint32`      | Header magic         | Always `{0x50 0x41 0x4B 0x53}` (ANSI "PAKS") |
+| `uint32`      | Unknown 1            | |
+| `uint32`      | PakLib version       | |
+| `uint32`      | Locale               | |
+| `uint32`      | Asset count          | |
+| `uint32`      | Used assets count    | |
+| `uint32`      | Deleted assets count | |
+| `uint32`      | File size            | (bytes) |
+| `uint32`      | Header sign          | Always `{0x4E 0x50 0x48 0x53}` (ASCII "NPHS" - NPak(Ntreev PAK Header Structure?)) |
 
 
 #### PAKS Asset Header Sector `0x7D000`
@@ -65,14 +65,14 @@ Asset header contains information about **asset** and it's *data*. If it's data 
 | `uint32`      | Is Deleted              | Marks asset as deleted, has info only about offset and length|
 | `uint32`      | Entry offset            | Offset of this entry from beginning of PAK file|
 | `uint32`      | Is packed               | uint32 that is used as boolean to indicate if file is embeded in pak |
-| `uint64`     | Unknown type             | Always ANSI "FIS\0"|
-| `uint64`     | Unknown value            | |
+| `uint64`      | Unknown type            | Always ANSI "FIS\0"|
+| `uint64`      | Unknown value           | |
 | `uint32`      | CRC Result              | CRC checksum of Data |
 | `uint32`      | Unknown9                | |
 | `uint32`      | CRC Identification      | Always ANSI "CRC2"|
 | `uint32`      | Unknown 7               | |
-| `uint64`     | Unknown 8                | |
-| `wstr`     | Path (512bytes total)      | |
+| `uint64`      | Unknown 8               | |
+| `wstr`        | Path (512bytes total)   | |
 
 #### PAKS Asset Data Sector `0xF00000`
 ##### PAKS Asset Data(*„asset data“*)
