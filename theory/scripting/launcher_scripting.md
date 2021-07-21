@@ -1,6 +1,8 @@
 # Gametree Launcher Scripting
 Script functions (without parameters) for Gametree Launcher version `0.11`
 
+Reverse engineered with Ghidra and Wireshark. 
+
 ## Functions
 I haven't started on writing down the parameters of each function, so this is just name list. 
 
