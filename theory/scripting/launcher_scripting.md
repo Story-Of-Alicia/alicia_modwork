@@ -101,3 +101,40 @@ I haven't started on writing down the parameters of each function, so this is ju
   SetCheck_CheckBox()
 ```
 
+
+#### Namespace `GameInfo`: 
+```lua
+  GetServerURL()
+  SetServerURL()
+  GetPakDir()
+  SetPakDir()
+  GetPakName()
+  SetPakName()
+  GetExeFileName()
+  SetExeFileName()
+  GetArgument()
+  SetArgument()
+  GetGameVersion()
+  SetGameVersion()
+  GetDefaultWebAddress()
+  SetDefaultWebAddress()
+  AddNewDistPackageInfo()
+  GetLauncherProcessStatusFunctionList()
+```
+## Classes
+
+#### Class `DistPackageInfo`(returned by `GameInfo:AddNewDistPackageInfo`):
+```lua
+  .strInstallFileURL
+  .strInstallFileName
+  .strInstallFileNameArguments
+  .strCustomCheckFunctionName
+```
+
+#### Class `"LauncherProcessStatusFunction"`(returned by `GameInfo:GetLauncherProcessStatusFunctionList`)
+```lua
+  .strFunction_LauncherSameGame
+  .strFunction_LauncherNotSameGame
+  .strFunction_Application
+  .strFunction_Patcher
+```
