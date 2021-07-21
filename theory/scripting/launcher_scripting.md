@@ -4,6 +4,10 @@ Script functions (without parameters) for Gametree Launcher version `0.11`
 ## Functions
 I haven't started on writing down the parameters of each function, so this is just name list. 
 
+Example of a script sent to Gametree Launcher to display a message box.
+![image](https://user-images.githubusercontent.com/32541639/126475564-0a77a85e-7c55-4cde-9100-eb3c8744e1be.png)
+
+
 #### Namespace `LauncherScriptObject`:
 ```lua
   GetGameInfoManager()
@@ -21,7 +25,7 @@ I haven't started on writing down the parameters of each function, so this is ju
   GetLauncherInfo()
   GetGameInfo()
   GetLauncherImpl()
-  MessageBox()
+  MessageBox(string)
   ShowLauncher()
   GetLauncherRootPath()
 ```
