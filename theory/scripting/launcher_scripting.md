@@ -93,7 +93,11 @@ Example of a script sent to Gametree Launcher to display a message box.
   SetDefaultFontSize()
 ```
 
-#### Namespace `LauncherGUI`:
+
+
+## Classes
+
+#### Class `LauncherGUI`:
 ```lua
   SetPosition_CurrentFileProgress()
   SetPosition_TotalFileProgress()
@@ -106,7 +110,7 @@ Example of a script sent to Gametree Launcher to display a message box.
 ```
 
 
-#### Namespace `GameInfo`: 
+#### Class `GameInfo`: 
 ```lua
   GetServerURL()
   SetServerURL()
@@ -125,9 +129,21 @@ Example of a script sent to Gametree Launcher to display a message box.
   AddNewDistPackageInfo()
   GetLauncherProcessStatusFunctionList()
 ```
-## Classes
 
-#### Class `DistPackageInfo`(returned by `GameInfo:AddNewDistPackageInfo`):
+#### Class `LauncherInfo`: 
+```lua
+  SetLauncherVersion()
+  GetLauncherVersion()
+  SetLauncherServerURL()
+  GetLauncherServerURL()
+```
+
+#### Class `GameInfoManager`:
+```lua
+  SetRegistryRootKey_Root()
+```
+
+#### Class `DistPackageInfo`:
 ```lua
   .strInstallFileURL
   .strInstallFileName
@@ -135,7 +151,7 @@ Example of a script sent to Gametree Launcher to display a message box.
   .strCustomCheckFunctionName
 ```
 
-#### Class `"LauncherProcessStatusFunction"`(returned by `GameInfo:GetLauncherProcessStatusFunctionList`)
+#### Class `LauncherProcessStatusFunction`:
 ```lua
   .strFunction_LauncherSameGame
   .strFunction_LauncherNotSameGame
