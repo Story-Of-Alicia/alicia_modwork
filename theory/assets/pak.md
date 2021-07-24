@@ -4,11 +4,11 @@
 
 Reverse engineered with [ProcMon](https://docs.microsoft.com/en-us/sysuint32ernals/downloads/procmon), [HxD](https://mh-nexus.de/en/hxd/), [and my bare hands](https://github.com/rgnter/alicia_modwork/tree/master/source).
 
-[@HSReina](https://github.com/hsreina) already made tool for unpacking(available on their website), but it isn't open-source and doesn't say anything about codec of PAKS. 
-
-
 ## Trivia
-PAKS is divided into three sections: File Header, Content Header, Asset Sector, Data Sector. 
+PAKS is divided into three sections: File Header, Content Header, Asset Sector, Data Sector. <br>
+PAKS codec uses little-endian byte sequence. <br>
+[@HSReina](https://github.com/hsreina) made tool for unpacking(available on their website), but it isn't open-source and doesn't say anything about codec of PAKS. 
+
 
 ## File Header
 This header contains information about PAK itself. 
