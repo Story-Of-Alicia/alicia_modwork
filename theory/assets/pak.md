@@ -25,6 +25,7 @@ Is located at `0x00000`.
 | `uint32`      | Used assets count    | |
 | `uint32`      | Deleted assets count | |
 | `uint32`      | File size            | (bytes) |
+| `uint32`      | Unknown 1            ||
 | `uint32`      | Header sign          | Always `{0x4E 0x50 0x48 0x53}` (ASCII "NPHS") |
 
 ## Content Header 
