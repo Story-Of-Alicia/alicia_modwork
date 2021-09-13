@@ -40,9 +40,10 @@ Is located at `0x7D000`.
 | `uint32`   | Asset count             | Total asset count |
 
 
-## Asset Sector
-Contains tightly packed array of Assets (of which size is described by Content Header). 
 
+
+## Asset Header
+Contains tightly packed array of Assets (of which size is described by Content Header). 
 `Total size: 108 bytes (+ path 620 bytes)`
 | Field type    | Field name                   | Notes      |
 | ----------    | -----------------------      | -------    |
@@ -73,8 +74,9 @@ Contains tightly packed array of Assets (of which size is described by Content H
 | `wstr`        | Path (512bytes total)     | |
      
      
-## Data Sector
+### Data Sector
 Contains asset embedded data. 
+Is located at `0xF00000`
 | Field type | Field name              | Notes   |
 | ---------- | ----------------------- | ------- |
 | `void`     | Variable asset data     | Actual data | 
