@@ -53,8 +53,7 @@ Contains tightly packed array of Assets (of which size is described by Content H
 | `uint32`      | Embedded data length      | Length of embedded data.  |
 | `uint32`      | Data uncompressed length  | Uncompressed length of data |
 | `uint32`      | Are data compressed?      | Whether this data are compressed or not. |
-| `uint32`      | Data uncompressed length  | -- |
-| `uint32`      | Unknown0                  | Always 0x0 |
+| `uint64`      | Data uncompressed length long  | -- |
 | `uint32`      | Data uncompressed length  | -- |
 | `uint32`      | Unknown1                  |    |
 | `uint32`      | Unknown2                  |    |
