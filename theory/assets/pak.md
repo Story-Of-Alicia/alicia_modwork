@@ -66,8 +66,8 @@ Contains tightly packed array of Assets (of which size is described by Content H
 | `uint32`      | Is embedded               | Whether this data are embedded or not. |
 | `uint64`      | Unknown type              | Always ASCII "FIS\0" |
 | `uint64`      | Unknown value             | |
-| `uint32`      | Compressed CRC Result     | |
-| `uint32`      | Embedded CRC Result       | CRC32 checksum of data |
+| `uint32`      | Uncompressed CRC          | Checksum on decompressed data |
+| `uint32`      | Embedded CRC              | Checksum on embeded data |
 | `uint32`      | CRC Identification        | Always ASCII "CRC2\0"|
 | `uint32`      | Unknown 7                 | |
 | `uint64`      | Unknown 8                 | |
