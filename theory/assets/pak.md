@@ -35,8 +35,8 @@ Is located at `0x7D000`.
 `Total size: 12 bytes`
 | Field type | Field name              | Notes      |
 | ---------- | ----------------------- | -------    |
-| `uint32`   | Magic                   | Always ANSI "FILS"|
-| `uint32`   | Magic                   | Always ANSI "FILZ"|
+| `uint32`   | Magic                   | Always ASCII "FILS"|
+| `uint32`   | Magic                   | Always ASCII "FILZ"|
 | `uint32`   | Asset count             | Total asset count |
 
 
@@ -64,18 +64,25 @@ Contains tightly packed array of Assets (of which size is described by Content H
 | `uint32`      | Are data deleted          | Whether this data are deleted or not. |
 | `uint32`      | Asset offset              | Contains information about offset of this header. |
 | `uint32`      | Is embedded               | Whether this data are embedded or not. |
-| `uint64`      | Unknown type              | Always ANSI "FIS\0" |
+| `uint64`      | Unknown type              | Always ASCII "FIS\0" |
 | `uint64`      | Unknown value             | |
 | `uint32`      | CRC Result                | CRC32 checksum of data |
 | `uint32`      | Unknown9                  | |
-| `uint32`      | CRC Identification        | Always ANSI "CRC2\0"|
+| `uint32`      | CRC Identification        | Always ASCII "CRC2\0"|
 | `uint32`      | Unknown 7                 | |
 | `uint64`      | Unknown 8                 | |
 | `wstr`        | Path (512bytes total)     | |
      
      
 ## Data Sector
-### Data Header
+### Data header
+Contains magic.
+Is located at `{asset count} * sizeof(asset_header)`
+| Field type | Field name              | Notes   |
+| ---------- | ----------------------- | ------- |
+| `uint32`   | Magic                   | ASCII "FILE" | 
+
+### Data
 Contains asset embedded data. 
 Is located at `0xF00000`
 | Field type | Field name              | Notes   |
