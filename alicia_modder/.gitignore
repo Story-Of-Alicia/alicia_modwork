@@ -1,0 +1,8 @@
+# CLion
+.idea/
+cmake-build-dbg/
+cmake-build-release/
+*.iml
+
+# General
+build/
