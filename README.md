@@ -9,5 +9,5 @@ Exploring AliciaOnline.
 - [Model system](theory/assets/models.md)
 
 ## Tools
-### barehands
+### Alicia Modder
 Program developed in C++ using MSVC toolchain. 
