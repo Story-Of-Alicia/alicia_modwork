@@ -17,13 +17,6 @@ Request:
 15:46:19.912 [HTTP-Dispatcher] INFO  xyz.rgnt.endpoint.AliciaLoginEndpoint -       Content-type: application/x-www-form-urlencoded
 15:46:19.912 [HTTP-Dispatcher] INFO  xyz.rgnt.endpoint.AliciaLoginEndpoint -       Content-length: 83
 15:46:19.912 [HTTP-Dispatcher] INFO  xyz.rgnt.endpoint.AliciaLoginEndpoint -   Body: login=regent&password=<password>&token=<token>
-15:46:20.083 [HTTP-Dispatcher] INFO  xyz.rgnt.endpoint.AliciaLoginEndpoint - Response: 
-15:46:20.084 [HTTP-Dispatcher] INFO  xyz.rgnt.endpoint.AliciaLoginEndpoint -   Headers: 
-15:46:20.138 [HTTP-Dispatcher] INFO  xyz.rgnt.endpoint.AliciaLoginEndpoint -   Server: Microsoft-IIS/8.5
-15:46:20.138 [HTTP-Dispatcher] INFO  xyz.rgnt.endpoint.AliciaLoginEndpoint -   Content-Length: 0
-15:46:20.138 [HTTP-Dispatcher] INFO  xyz.rgnt.endpoint.AliciaLoginEndpoint -   Date: Thu, 18 Nov 2021 14:46:19 GMT
-15:46:20.138 [HTTP-Dispatcher] INFO  xyz.rgnt.endpoint.AliciaLoginEndpoint -   X-Powered-By: PHP/7.0.0
-15:46:20.138 [HTTP-Dispatcher] INFO  xyz.rgnt.endpoint.AliciaLoginEndpoint -   Content-Type: text/html; charset=UTF-8
 ```
 
 Response:
