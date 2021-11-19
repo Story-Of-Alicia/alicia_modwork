@@ -18,6 +18,7 @@ Request:
 15:46:19.912 [HTTP-Dispatcher] INFO  xyz.rgnt.endpoint.AliciaLoginEndpoint -       Content-length: 83
 15:46:19.912 [HTTP-Dispatcher] INFO  xyz.rgnt.endpoint.AliciaLoginEndpoint -   Body: login=regent&password=<password>&token=<token>
 ```
+Token is not required.
 
 Response:
 ```
