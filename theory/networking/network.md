@@ -1,6 +1,13 @@
 # Network
 Reverse engineering Alicia network. Done with [Procmon](https://docs.microsoft.com/en-us/sysinternals/downloads/procmon) and [Wireshark](https://www.wireshark.org).
 
+## Server Types
+| Server | Desc |
+| ------ | ---- |
+| Relay  | ranch, ... |
+| Lobby  | |
+| Race   | | 
+| Guild Chat | |
 
 ## Login endpoint
 // todo
