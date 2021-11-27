@@ -1,5 +1,5 @@
-# Configuration
-Alicia uses registry as it's configuration provider.
+# Shared Configuration
+Alicia uses registry as it's shared configuration provider.
 
 ## Launcher configuration
 #### `HKCU\Software\AliciaOnline`
@@ -56,3 +56,27 @@ Contains information about:
 | Field name | Field type      | Note |
 | :--       |:--:             | :-- |
 | XMLData_GoodsShop_4_version      | `REG_SZ`      | Contains `2013-10-01 16:02:35` |
+
+# Game Configuration
+## Client configuration
+Contains information about translations, items, abilities, servers(game id info)
+
+## Script configuration
+Scripts can modify game behaviour by modifying variables created by client.
+### Variable types
+| Var name | desc |
+| -------- | ---- |
+| server var | |
+| archive var | | 
+| var | |
+### Modifying
+Scripts can modify variables by calling `util::SetVar[Value|Float|String...]`. 
+### Console commands   
+The variables can by also modified with console commands.
+| Command name | Desc |
+| ------------ | ----- | 
+| set          | Sets variable |
+| seta         | sets archive variable |
+| seta         | sets server variable |
+
+Usage: `<command name> <variable name> <variable value>`.
