@@ -87,23 +87,23 @@ Usage: `<command name> <variable name> <variable value>`.
 ### Variable listing
 All variables
 #### Common Variables (`com_`)
-
+[listing](com_variables.csv)
 #### Debug Variables (`dbg_`)
-
+[listing](dbg_variables.csv)
 #### Camera Variables (`cam_`)
-
+[listing](cam_variables.csv)
 #### Command Variables  (`cmd_`)
-
+[listing](cmd_variables.csv)
 #### PHY Variables (`phy_`)
-
+[listing](phy_variables.csv)
 #### Render Variables (`r_`)
-
+[listing](r_variables.csv)
 #### Sound Variables (`snd_`)
-
+[listing](snd_variables.csv)
 #### System Variables (`sys_`)
-
+[listing](sys_variables.csv)
 #### Interface Variables (`ui_`)
-
+[listing](ui_variables.csv)
 #### Uncategorized
 tempuser
 item
