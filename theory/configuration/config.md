@@ -69,9 +69,12 @@ Scripts can modify game behaviour by modifying variables created by client.
 | server var | |
 | archive var | | 
 | var | |
+
 ### Modifying
+#### Scripts
 Scripts can modify variables by calling `util::SetVar[Value|Float|String...]`. 
-### Console commands   
+
+#### Console commands   
 The variables can by also modified with console commands.
 | Command name | Desc |
 | ------------ | ----- | 
@@ -80,3 +83,31 @@ The variables can by also modified with console commands.
 | seta         | sets server variable |
 
 Usage: `<command name> <variable name> <variable value>`.
+
+### Variable listing
+All variables
+#### Common Variables (`com_`)
+
+#### Debug Variables (`dbg_`)
+
+#### Camera Variables (`cam_`)
+
+#### Command Variables  (`cmd_`)
+
+#### PHY Variables (`phy_`)
+
+#### Render Variables (`r_`)
+
+#### Sound Variables (`snd_`)
+
+#### System Variables (`sys_`)
+
+#### Interface Variables (`ui_`)
+
+#### Uncategorized
+tempuser
+item
+maxAlp
+maxDis
+minAlp
+minDis
