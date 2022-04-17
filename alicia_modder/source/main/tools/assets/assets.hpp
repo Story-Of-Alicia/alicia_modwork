@@ -104,9 +104,9 @@ namespace assets {
         uint32_t crc_decompressed{};
         uint32_t crc_embedded{};
         uint32_t crc_identity{};
-
-        uint32_t unknown7{};
-        uint64_t unknown8{};
+        uint32_t checksum_decompressed{};
+        uint32_t checksum_embedded{};
+        uint32_t unknown6{};
     };
 
     /**
@@ -117,7 +117,8 @@ namespace assets {
         asset_common common{};
 
     public:
-        wchar_t path[256] = {0};
+        wchar_t w_path[256] = {0};
+        char path[256] = {0};
     };
 
     /**

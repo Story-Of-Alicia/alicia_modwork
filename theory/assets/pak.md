@@ -44,7 +44,7 @@ Is located at `0x7D000`.
 ## Asset Sector
 ### Asset Header
 Contains tightly packed array of Assets (of which size is described by Content Header). 
-`Total size: 108 bytes (+ path 620 bytes)`
+`Total size: 108 bytes (+ w_path 620 bytes)`
 | Field type    | Field name                   | Notes      |
 | ----------    | -----------------------      | -------    |
 | `uint32`      | Asset prefix              | Always 0x0                        | 

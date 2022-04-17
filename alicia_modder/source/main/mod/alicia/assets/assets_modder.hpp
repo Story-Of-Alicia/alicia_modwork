@@ -20,6 +20,8 @@ namespace mod {
         std::string pak_path;
         std::string info_path;
 
+        std::string modified_path;
+
     private:
         volatile bool working = false;
         std::thread worker;

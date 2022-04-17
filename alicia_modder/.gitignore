@@ -2,6 +2,7 @@
 .idea/
 cmake-build-dbg/
 cmake-build-release/
+cmake-build-debug/
 *.iml
 
 # General

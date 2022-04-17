@@ -19,7 +19,7 @@ conan_cmake_configure(REQUIRES spdlog/1.8.5 ctre/3.4.1 cxxopts/2.2.1 imgui/1.83 
 conan_cmake_autodetect(settings)
 conan_cmake_install(PATH_OR_REFERENCE .
         BUILD missing
-        REMOTE conan-center
+        REMOTE conancenter
         SETTINGS ${settings})
 
 find_package(spdlog)
