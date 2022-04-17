@@ -2,7 +2,8 @@
 # Alicia PAK format
 > AliciaOnline version: `v1.318`. 
 
-Reverse engineered with [ProcMon](https://docs.microsoft.com/en-us/sysuint32ernals/downloads/procmon), [HxD](https://mh-nexus.de/en/hxd/), [and my bare hands](https://github.com/rgnter/alicia_modwork/tree/master/source).
+Reverse engineered with [ProcMon](https://docs.microsoft.com/en-us/sysuint32ernals/downloads/procmon), [HxD](https://mh-nexus.de/en/hxd/), [and my bare hands](https://github.com/rgnter/alicia_modwork/tree/master/source).<br>
+With help of [presentation made by somebody from Ntreev team](https://prezi.com/a8bmssbbb4ay/v20/), I found some field names. If presentation is not available anymore, contact me for a copy.
 
 ## Trivia
 PAKS is divided into three sections: File Header, Content Header, Asset Sector, Data Sector. <br>
@@ -25,7 +26,7 @@ Is located at `0x00000`.
 | `uint32`      | Used assets count    | |
 | `uint32`      | Deleted assets count | |
 | `uint32`      | File size            | (bytes) |
-| `uint32`      | Unknown 1            ||
+| `uint32`      | Team version          ||
 | `uint32`      | Header sign          | Always `{0x4E 0x50 0x48 0x53}` (ASCII "NPHS") |
 
 ## Content Header 
