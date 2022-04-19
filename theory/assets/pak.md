@@ -52,11 +52,11 @@ Contains tightly packed array of Assets (of which size is described by Content H
 | `uint32`      | Asset magic               | Always a value between 0x30 and 0x40 (??) |
 | `uint32`      | Embedded data offset      | Offset of embedded data.  |
 | `uint32`      | Embedded data length      | Length of embedded data.  |
-| `uint32`      | Data uncompressed length  | Uncompressed length of data |
+| `uint32`      | Data decompressed length  | Uncompressed length of data |
 | `uint32`      | Are data compressed?      | Whether this data are compressed or not. |
-| `uint32`      | Data uncompressed length  | -- |
+| `uint32`      | Data decompressed length  | -- |
 | `uint32`      | Unknown0                  |    |
-| `uint32`      | Data uncompressed length  | -- |
+| `uint32`      | Data decompressed length  | -- |
 | `uint32`      | Unknown1                  |    |
 | `uint32`      | Unknown2                  |    |
 | `uint32`      | Unknown3                  |    |
@@ -67,11 +67,12 @@ Contains tightly packed array of Assets (of which size is described by Content H
 | `uint32`      | Is embedded               | Whether this data are embedded or not. |
 | `uint64`      | Unknown type              | Always ASCII "FIS\0" |
 | `uint64`      | Unknown value             | |
-| `uint32`      | Uncompressed CRC          | Checksum on decompressed data |
-| `uint32`      | Embedded CRC              | Checksum on embeded data |
+| `uint32`      | Decompressed CRC          | |
+| `uint32`      | Embedded CRC              | |
 | `uint32`      | CRC Identification        | Always ASCII "CRC2\0"|
-| `uint32`      | Unknown 7                 | |
-| `uint64`      | Unknown 8                 | |
+| `uint32`      | Decompressed Checksum                 | |
+| `uint32`      | Embedded Checksum                  | |
+| `uint32`      | Unknown 6             | |
 | `wstr`        | Path (512bytes total)     | |
      
      
