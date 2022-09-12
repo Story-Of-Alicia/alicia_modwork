@@ -10,6 +10,8 @@ PAKS is divided into three sections: File Header, Content Header, Asset Sector, 
 PAKS codec uses little-endian byte sequence. <br>
 [@HSReina](https://github.com/hsreina) made tool for unpacking(available on their website), but it isn't open-source and doesn't say anything about codec of PAKS. 
 
+## Devs
+You can use [C++ NPAK synchronous API](https://github.com/rgnter/alicia_modwork/blob/master/alicia_modder/source/main/tools/assets/assets.hpp) to write and read PAKs. It works, but is far from perfect.
 
 ## File Header
 This header contains information about PAK itself. 
@@ -67,14 +69,16 @@ Contains tightly packed array of Assets (of which size is described by Content H
 | `uint32`      | Is embedded               | Whether this data are embedded or not. |
 | `uint64`      | Unknown type              | Always ASCII "FIS\0" |
 | `uint64`      | Unknown value             | |
-| `uint32`      | Decompressed CRC          | |
-| `uint32`      | Embedded CRC              | |
+| `uint32`      | Decompressed CRC          | *crc note |
+| `uint32`      | Embedded CRC              | *crc note |
 | `uint32`      | CRC Identification        | Always ASCII "CRC2\0"|
 | `uint32`      | Decompressed Checksum                 | |
 | `uint32`      | Embedded Checksum                  | |
 | `uint32`      | Unknown 6             | |
 | `wstr`        | Path (512bytes total)     | |
-     
+
+
+*crc note: Their CRC algorithm is not standard, they use **signed** integer to store the CRC value. See [implementation here](https://github.com/rgnter/alicia_modwork/blob/4fc8a6c69755a843920cd86a68fdf30c22c7506f/alicia_modder/source/main/tools/assets/assets.cpp#L20).
      
 ## Data Sector
 ### Data header
