@@ -13,7 +13,8 @@ PAKS codec uses little-endian byte sequence. <br>
 ## Devs
 You can use [C++ NPAK synchronous API](https://github.com/rgnter/alicia_modwork/blob/master/alicia_modder/source/main/tools/assets/assets.hpp) to write and read PAKs. It works, but is far from perfect.
 
-## File Header
+## Codec
+### PAK Header
 This header contains information about PAK itself. 
 Is located at `0x00000`. 
 
@@ -31,7 +32,9 @@ Is located at `0x00000`.
 | `uint32`      | Team version          ||
 | `uint32`      | Header sign          | Always `{0x4E 0x50 0x48 0x53}` (ASCII "NPHS") |
 
-## Content Header 
+
+### Asset Sector
+#### Asset Sector Header 
 This header contains information about assets. 
 Is located at `0x7D000`. 
 
@@ -42,11 +45,9 @@ Is located at `0x7D000`.
 | `uint32`   | Magic                   | Always ASCII "FILZ"|
 | `uint32`   | Asset count             | Total asset count |
 
+Is immediately followed by a tightly packed array of assets.
 
-
-## Asset Sector
-### Asset Header
-Contains tightly packed array of Assets (of which size is described by Content Header). 
+#### Asset
 `Total size: 108 bytes (with path total is 620 bytes)`
 | Field type    | Field name                   | Notes      |
 | ----------    | -----------------------      | -------    |
@@ -69,31 +70,31 @@ Contains tightly packed array of Assets (of which size is described by Content H
 | `uint32`      | Is embedded               | Whether this data are embedded or not. |
 | `uint64`      | Unknown type              | Always ASCII "FIS\0" |
 | `uint64`      | Unknown value             | |
-| `uint32`      | Decompressed CRC          | *crc note |
-| `uint32`      | Embedded CRC              | *crc note |
+| `uint32`      | Decompressed CRC          | zlib crc32 |
+| `uint32`      | Embedded CRC              | zlib crc32 |
 | `uint32`      | CRC Identification        | Always ASCII "CRC2\0"|
-| `uint32`      | Decompressed Checksum                 | |
-| `uint32`      | Embedded Checksum                  | |
+| `uint32`      | Decompressed Checksum     | *checksum note |
+| `uint32`      | Embedded Checksum         | *checksum note |
 | `uint32`      | Unknown 6             | |
 | `wstr`        | Path (512bytes total)     | |
 
 
-*crc note: Their CRC algorithm is not standard, they use **signed** integer to store the CRC value. See [implementation here](https://github.com/rgnter/alicia_modwork/blob/4fc8a6c69755a843920cd86a68fdf30c22c7506f/alicia_modder/source/main/tools/assets/assets.cpp#L20).
+*checksum note: Their Checksum algorithm is not standard, they use **signed** integer to store the checksum value. See [implementation here](https://github.com/rgnter/alicia_modwork/blob/4fc8a6c69755a843920cd86a68fdf30c22c7506f/alicia_modder/source/main/tools/assets/assets.cpp#L20).
      
-## Data Sector
-### Data header
-Contains magic.
-Is located at `{asset count} * sizeof(asset_header)`
+### Data Sector
+#### Data Sector Header
+Is located at `{asset count} * sizeof(asset_header)` (this may seem as a trailer(footer) for the asset sector, but the ASCII magic says "FILE" indicating that it should be header of data sector.
 | Field type | Field name              | Notes   |
 | ---------- | ----------------------- | ------- |
 | `uint32`   | Magic                   | ASCII "FILE" | 
 
-### Data
+
+#### Data
 Contains asset embedded data. 
-Is located at `0xF00000`
+Is located at `0xF00000` (it's not a requirement, rather a feature so the writer doesn't have to be cursor aware to start writing data). 
 | Field type | Field name              | Notes   |
 | ---------- | ----------------------- | ------- |
 | `void`     | Variable asset data     | Actual data | 
 
-### Data compression
+## Data compression
 Data compression is done with [zlib](https://zlib.net/).
