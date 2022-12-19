@@ -7,6 +7,7 @@ Exploring AliciaOnline.
 - [Config system](theory/configuration/config.md)
 - [Asset sytem](theory/assets/pak.md)
 - [Model system](theory/assets/models.md)
+- [Launcher system](theory/booting/launcher.md)
 ### debugging
 - [Debugging](theory/debugging/debugging.md)
 
