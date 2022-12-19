@@ -22,3 +22,6 @@ Writing this here to let anybody who wants to continue in my work, please remind
 ## Tools
 ### Alicia Modder
 Program developed in C++ using MSVC toolchain. 
+
+### Discord
+Link to [Stato's Burrow](https://discord.gg/HFqu53G7UF)
