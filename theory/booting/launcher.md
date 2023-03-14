@@ -1,6 +1,6 @@
 # How to launch the game w/o the real launcher
 ## Login
-Grab yourself login token from (AliciaOnline endpoint)[https://github.com/rgnter/alicia_modwork/blob/master/theory/networking/network.md].
+Grab yourself login token from [AliciaOnline endpoint](https://github.com/rgnter/alicia_modwork/blob/master/theory/networking/network.md).
 ## Launcher
 [Map a shared memory](https://learn.microsoft.com/en-us/windows/win32/memory/creating-named-shared-memory) file named `927628CA6D76A6E9162C56D4E3E6D6E3` and write the following buffer to it: 
 ```
