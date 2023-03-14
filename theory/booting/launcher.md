@@ -8,6 +8,11 @@ Grab yourself login token from [AliciaOnline endpoint](https://github.com/rgnter
 ```
 Example cpp code:
 ```cpp
+constexpr const char *WEBINFO_ID
+        = "927628CA6D76A6E9162C56D4E3E6D6E3";
+constexpr const char* WEBINFO
+        = "\t\t|GameId=Alicia|MemberNo=1008800|LoginID=<name>|AuthKey=<key>|InstallUrl=http://install.aliciagame.com/Client/Alicia_mini_setup_04.exe|ServerType=0|ServerInfo=:|Age=16|Sex=2|Birthday=|WardNo=0|CityCode=00|ZipCode=|PCBangNo=0|CloseTime=\0";
+        
 void write_webinfo()
 {
   auto file_handle = CreateFile(WEBINFO_ID,
