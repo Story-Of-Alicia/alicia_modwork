@@ -24,6 +24,8 @@ PAKS is divided into three sections with headers:
    - Data Header
    - array of Data
 
+(*note: there are some asset headers and another data header after the actual data header, but those are not used by the game, and are probably just patching artifacts*)
+
 PAKS codec uses little-endian byte sequence. <br>
 
 ## Devs
