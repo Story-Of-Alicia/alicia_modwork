@@ -73,12 +73,12 @@ Is immediately followed by a tightly packed array of assets.
 | `uint32`      | Asset prefix              | Always 0x0                        | 
 | `uint32`      | Asset magic               | Always a value between 0x30 and 0x40 (??) |
 | `uint32`      | Embedded data offset      | Offset of embedded data.  |
-| `uint32`      | Embedded data length      | Length of embedded data.  |
+| `uint32`      | Embedded data length      | Length of embedded data. *length_note  |
 | `uint32`      | Data decompressed length  | Uncompressed length of data |
 | `uint32`      | Are data compressed?      | Whether this data are compressed or not. |
-| `uint32`      | Data decompressed length  | -- |
+| `uint32`      | Data decompressed length  | *length_note |
 | `uint32`      | Unknown0                  |    |
-| `uint32`      | Data decompressed length  | -- |
+| `uint32`      | Data decompressed length  | *length_note |
 | `uint32`      | Unknown1                  |    |
 | `uint32`      | Unknown2                  |    |
 | `uint32`      | Unknown3                  |    |
@@ -97,8 +97,8 @@ Is immediately followed by a tightly packed array of assets.
 | `uint32`      | Unknown 6             | |
 | `wstr`        | Path (512bytes total)     | |
 
-
-*checksum note: Their Checksum algorithm is not standard, they use **signed** integer to store the checksum value. See [implementation here](https://github.com/rgnter/alicia_modwork/blob/4fc8a6c69755a843920cd86a68fdf30c22c7506f/alicia_modder/source/main/tools/assets/assets.cpp#L20).
+- *\*length note: NPAK compresses small buffers, and causes them to inflate, use the largest of the decompressed_length and embedded_length*
+- *\*checksum note: Their Checksum algorithm is not standard, they use **signed** integer to store the checksum value. See [implementation here](https://github.com/rgnter/alicia_modwork/blob/4fc8a6c69755a843920cd86a68fdf30c22c7506f/alicia_modder/source/main/tools/assets/assets.cpp#L20).*
      
 ### Data Sector
 #### Data Header
