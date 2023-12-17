@@ -2,11 +2,13 @@
 ## Login
 Grab yourself login token from [AliciaOnline endpoint](https://github.com/rgnter/alicia_modwork/blob/master/theory/networking/network.md).
 ## Launcher
+You can get really [simple launcher I built over here](https://github.com/rgnter/alicia_launcher).
+
+### DIY
 [Map a shared memory](https://learn.microsoft.com/en-us/windows/win32/memory/creating-named-shared-memory) file named `927628CA6D76A6E9162C56D4E3E6D6E3` and write the following buffer to it: 
 ```
 \n\t\t|GameId=Alicia|MemberNo=<id>|LoginID=<name>|AuthKey=<key>|InstallUrl=http://127.0.0.1:8512/Client/Alicia_mini_setup_04.exe|ServerType=0|ServerInfo=:|Age=16|Sex=2|Birthday=|WardNo=0|CityCode=00|ZipCode=|PCBangNo=0
 ```
-Example cpp code:
 ```cpp
 constexpr const char *WEBINFO_ID
         = "927628CA6D76A6E9162C56D4E3E6D6E3";
