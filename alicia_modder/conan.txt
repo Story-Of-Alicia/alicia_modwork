@@ -1,0 +1,10 @@
+[requires]
+spdlog/1.8.5
+ctre/3.4.1
+cxxopts/2.2.1
+imgui/1.83
+zlib/1.2.11
+
+[generators]
+CMakeDeps
+CMakeToolchain
