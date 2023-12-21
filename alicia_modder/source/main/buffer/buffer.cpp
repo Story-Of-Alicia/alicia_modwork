@@ -10,9 +10,6 @@ buffer::stack_buffer::stack_buffer(const void *dataPtr, size_t dataLen) :
         m_buffer((uint8_t *) dataPtr), m_bufferLength(dataLen), m_bufferCursor(0) {
 }
 
-
-
-
 void buffer::stack_buffer::setCursor(size_t pos) {
     this->m_bufferCursor = pos;
 }

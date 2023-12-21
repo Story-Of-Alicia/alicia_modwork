@@ -8,27 +8,29 @@
 #include <cstdint>
 
 
-namespace mod {
-    class DataView {
-        enum class ViewType {
-            BINARY,
-            ASCII,
+namespace mod
+{
+class DataView
+{
+  enum class ViewType
+  {
+    BINARY,
+    ASCII,
 
-            MIXED,
+    MIXED,
 
-            TEXTURE_PNG,
-            TEXTURE_DDS
-        };
+    TEXTURE_PNG,
+    TEXTURE_DDS
+  };
 
-    public:
-        uint32_t align = 30;
-        ViewType type;
+public:
+  uint32_t align = 30;
+  ViewType type;
 
-    public:
-        void render_data_view(uint8_t *data, size_t data_length);
-    };
-}
+public:
+  void render_data_view(uint8_t* data, size_t data_length);
+};
+}// namespace mod
 
 
-
-#endif //ALICIA_MODDER_DATA_VIEW_HPP
+#endif//ALICIA_MODDER_DATA_VIEW_HPP

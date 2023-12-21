@@ -6,36 +6,37 @@
 #define ALICIA_MODDER_ASSETS_MODDER_HPP
 
 #include "main/tools/assets/assets.hpp"
-#include <thread>
 #include <spdlog/spdlog.h>
 #include <spdlog/stopwatch.h>
+#include <thread>
 
-namespace mod {
-    class AssetsModder {
-    public:
-        assets::PakContents pakContents;
-        assets::InfoContents infoContents;
+namespace mod
+{
+class AssetsModder
+{
+public:
+  assets::PakContents pakContents;
+  assets::InfoContents infoContents;
 
-    public:
-        std::string pak_path;
-        std::string info_path;
+public:
+  std::string pak_path;
+  std::string info_path;
 
-        std::string modified_path;
+  std::string modified_path;
 
-    private:
-        volatile bool working = false;
-        std::thread worker;
-        spdlog::stopwatch workerElapsed;
-        std::string workerDesc;
+private:
+  volatile bool working = false;
+  std::thread worker;
+  spdlog::stopwatch workerElapsed;
+  std::string workerDesc;
 
-    public:
-        void renderInterface();
+public:
+  void renderInterface();
 
-    private:
-        template<typename Func>
-        bool submitWork(const Func& function,
-                        const std::string& desc);
-    };
-}
+private:
+  template<typename Func>
+  bool submitWork(const Func& function, const std::string& desc);
+};
+}// namespace mod
 
-#endif //ALICIA_MODDER_ASSETS_MODDER_HPP
+#endif//ALICIA_MODDER_ASSETS_MODDER_HPP

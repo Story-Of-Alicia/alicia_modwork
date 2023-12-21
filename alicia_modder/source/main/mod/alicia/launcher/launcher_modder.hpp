@@ -6,9 +6,9 @@
 #define ALICIA_MODDER_LAUNCHER_MODDER_HPP
 
 
-class LauncherModder {
-
+class LauncherModder
+{
 };
 
 
-#endif //ALICIA_MODDER_LAUNCHER_MODDER_HPP
+#endif//ALICIA_MODDER_LAUNCHER_MODDER_HPP
