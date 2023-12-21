@@ -68,7 +68,9 @@ set(AM_SOURCES
         source/main/helpers/filesystem.cpp
         source/main/helpers/filesystem.hpp
         source/main/mod/alicia/assets/assets_modder.cpp
-        source/main/mod/alicia/assets/assets_modder.hpp)
+        source/main/mod/alicia/assets/assets_modder.hpp
+        source/main/mod/alicia/gametree/GTLx.c
+        source/main/mod/alicia/gametree/GTLx.h)
 
 add_executable(alicia_modder
         ${AM_VENDOR_SOURCES} ${AM_SOURCES})
