@@ -17,6 +17,7 @@ Writing this here to let anybody who wants to continue in my work, please remind
 - [Asset sytem](theory/assets/pak.md)
 - [Model system](theory/assets/models.md)
 - [Launcher system](theory/booting/launcher.md)
+- [Gametree system](theory/booting/gametree.md)
 ### debugging
 - [Debugging](theory/debugging/debugging.md)
 ## Tools
