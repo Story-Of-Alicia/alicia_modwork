@@ -301,9 +301,9 @@ interface IGTL
 #define IGTL_ProcessCheck(This,processName,result)	\
     ( (This)->lpVtbl -> ProcessCheck(This,processName,result) ) 
 
-#endif
-#endif
-#endif 
+#endif // COBJMACROS
+#endif // __cplusplus and not cinterface
+#endif // IGTL_INTERFACE_DEFINED
 
 EXTERN_C const CLSID CLSID_GTL;
 
@@ -312,6 +312,7 @@ EXTERN_C const CLSID CLSID_GTL;
 class DECLSPEC_UUID("99846979-30FD-453E-A427-99217EA62571")
 GTL;
 #endif
+
 #endif // GTLxLib_LIBRARY_DEFINED
 
 #ifdef __cplusplus
