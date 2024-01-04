@@ -48,7 +48,7 @@ void mod::AssetsModder::renderInterface()
     {
       if (ImGui::Button("Read game assets.") && !this->working)
       {
-        this->pak_path = filesystem::helper::UserSelectFile("Select PAK file", "PAK file (*.pak)\0*.pak\0");
+        this->pak_path = filesystem::helper::UserSelectFile("Select PAK file", "PAK file (*.pak)\0*.pak;*.pak.*;*.pak.bak\0");
         if (!this->pak_path.empty())
         {
           this->submitWork([this]()

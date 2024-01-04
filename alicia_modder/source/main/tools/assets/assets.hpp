@@ -49,8 +49,8 @@ public:
 
 
 /**
-     * Represents PAK content header
-     */
+ * Represents PAK content header
+ */
 struct pak_content_header
 {
 public:

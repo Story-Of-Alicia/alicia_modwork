@@ -92,7 +92,9 @@ bool write_embedded_data(std::ofstream& file, assets::asset_common& header, cons
   uLongf embedded_crc = 0;
   uLongf decompressed_crc = {
     crc32(0, data.get(), header.data_decompressed_length)};
-  uint32_t decompressed_checksum = alicia_checksum((const char*) data.get(), header.data_decompressed_length);
+
+  uint32_t decompressed_checksum = alicia_checksum(
+    (const char*) data.get(), header.data_decompressed_length);
   header.checksum_decompressed = decompressed_checksum;
 
   if (header.is_data_compressed)
@@ -110,7 +112,8 @@ bool write_embedded_data(std::ofstream& file, assets::asset_common& header, cons
     embedded_crc = {
       crc32(0, compressedBuf, compressedLength)};
     // calculate compressed sum
-    uint32_t embedded_checksum = alicia_checksum((const char*) compressedBuf, compressedLength);
+    uint32_t embedded_checksum = alicia_checksum(
+      (const char*) compressedBuf, compressedLength);
     header.checksum_embedded = embedded_checksum;
 
     // embedded data length is now equal to compressed length
@@ -123,18 +126,20 @@ bool write_embedded_data(std::ofstream& file, assets::asset_common& header, cons
   {
     // both crc's are the same
     embedded_crc = decompressed_crc;
+    // both checksums are the same
+    header.checksum_embedded = decompressed_checksum;
 
     // in case header has been compressed before, update the embedded length.
     header.embedded_data_length = header.data_decompressed_length;
 
     file.write((char*) data.get(), header.embedded_data_length);
   }
-
-
+  
   // update offset and crcs
   header.embedded_data_offset = data_offset;
   header.crc_decompressed = decompressed_crc;
   header.crc_embedded = embedded_crc;
+
   // skip 4 bytes after this data
   data_offset += header.embedded_data_length + 4;
 
