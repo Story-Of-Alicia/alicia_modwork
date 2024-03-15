@@ -1,15 +1,27 @@
 # Network
 Reverse engineering Alicia network. Done with [Procmon](https://docs.microsoft.com/en-us/sysinternals/downloads/procmon) and [Wireshark](https://www.wireshark.org).
 
-## Server Types
+## Alicia protocol
+TCP/IP
+### Server Types
 | Server | Desc |
 | ------ | ---- |
 | Relay  | ranch, ... |
 | Lobby  | |
 | Race   | | 
 | Guild Chat | |
+### Network messages
+#### Codec
+| Type | Name | Note |
+| ------ | ---- | ---- |
+| uint32 | Message magic | Encoded message information |
+| uint8[x] | Message data | Actual message data |
 
-## Login endpoint
+[Example of how to encode and decode message information](https://gist.github.com/rgnter/05acd36492a28ea2bf133f3d85ad16c3)
+
+
+## Alicia Online protocol
+### Login endpoint (Alicia Online middle man)
 // todo
 Request:
 ```
@@ -40,11 +52,10 @@ Response:
 15:50:08.490 [HTTP-Dispatcher] INFO  xyz.rgnt.endpoint.AliciaLoginEndpoint - Body: 		|GameId=Alicia|MemberNo=830451|LoginID=regent|AuthKey=<authKey>|InstallUrl=http://install.aliciagame.com/Client/Alicia_mini_setup_04.exe|ServerType=0|ServerInfo=:|Age=16|Sex=2|Birthday=|WardNo=0|CityCode=00|ZipCode=|PCBangNo=0|CloseTime=
 ```
 
-## Loopback endpoints
+### Loopback endpoints
 Communication endpoints in **AliciaLauncher** and **AliciaGame** are done with **HTTP/1.1***(over TCP/IP)*. 
 
 ### Protocol
-
 #### Endpoints
 ###### AliciaLauncher
 Runs on port `8512`
