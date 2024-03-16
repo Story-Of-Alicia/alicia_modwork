@@ -12,7 +12,7 @@ Writing this here to let anybody who wants to continue in my work, please remind
 
 ## Exploration
 ### systems
-- [Network system](theory/networking/network.md)
+- [Network system](https://github.com/Story-Of-Alicia/alicia_server/wiki/Alicia-protocol)
 - [Config system](theory/configuration/config.md)
 - [Asset sytem](theory/assets/pak.md)
 - [Model system](theory/assets/models.md)
