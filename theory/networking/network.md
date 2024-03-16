@@ -1,5 +1,5 @@
 # Network
-Reverse engineering Alicia network. Done with [Procmon](https://docs.microsoft.com/en-us/sysinternals/downloads/procmon) and [Wireshark](https://www.wireshark.org).
+Reverse engineering Alicia network.
 
 ## Alicia protocol
 Alicia protocol is based on the TCP/IP protocol. 
