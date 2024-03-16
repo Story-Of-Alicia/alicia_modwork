@@ -4,7 +4,7 @@ Reverse engineering Alicia network.
 ## Alicia protocol
 Alicia protocol is based on the TCP/IP protocol. 
 
-### Server Types
+### Network server types
 | Server | Desc |
 | ------ | ---- |
 | Lobby  | Synchronous |
@@ -12,16 +12,16 @@ Alicia protocol is based on the TCP/IP protocol.
 | Race   | Asynchronous | 
 | Guild Chat | |
 
-### Message codec
+### Network message codec
 | Type | Name | Note |
 | ------ | ---- | ---- |
 | uint32 | Message magic | Encoded message information |
 | uint8[x] | Message data | Actual message data |
 
 [Example of how to encode and decode message information](https://gist.github.com/rgnter/05acd36492a28ea2bf133f3d85ad16c3)
-### Messages
-#### CmdCLLogin
-Serverbound
+### Network Messages
+#### Serverbound
+##### CmdCLLogin
 | Type | Name | Note |
 | ------ | ---- | ---- |
 | uint16_t | | |
@@ -30,12 +30,13 @@ Serverbound
 | uint32_t | Game ID | |
 | string[260] | | |
 
-#### CmdCLLogin OK
+#### Clientbound
+##### CmdCLLogin OK
 Clientbound
 | Type | Name | Note |
 | ------ | ---- | ---- |
 
-#### CmdCLLogin CANCEL
+##### CmdCLLogin CANCEL
 Clientbound
 | Type | Name | Note |
 | ------ | ---- | ---- |
