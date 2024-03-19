@@ -129,7 +129,7 @@ bool write_embedded_data(std::ofstream& file, assets::asset_common& header, cons
     // both checksums are the same
     header.checksum_embedded = decompressed_checksum;
 
-    // in case header has been compressed before, update the embedded length.
+    // update the embedded length
     header.embedded_data_length = header.data_decompressed_length;
 
     file.write((char*) data.get(), header.embedded_data_length);
